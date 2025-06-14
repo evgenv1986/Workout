@@ -3,8 +3,9 @@ from django.shortcuts import render
 
 def input_exercise_reps(request):        
     if request.method == 'POST':
-        reps_completed = request.POST.get('reps')
-        
+        reps = request.POST.get('reps')
+        if not reps:
+            return HttpResponse("Пожалуйста, выберите количество повторений")
     
     return render (
         request,
