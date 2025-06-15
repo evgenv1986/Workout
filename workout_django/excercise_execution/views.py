@@ -35,5 +35,5 @@ def exercise_execute(request):
             # return HttpResponse("Пожалуйста, выберите количество повторений")
     
         return HttpResponse (
-            f'step = {step}')
+            f'step = {step.reps}')
     
