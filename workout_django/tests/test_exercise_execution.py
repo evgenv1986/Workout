@@ -31,3 +31,10 @@ class TestExerciseExecution:
                     Exercise('Отжимания'),
                     25)) \
                     .remaind()
+    def  test_remaind_after_execution_step(self):
+        exerciseExecution = ExerciseExecution (
+                ExerciseTask(
+                    Exercise('Отжимания'),
+                    25))
+        exerciseExecution.execute(ExerciseStep(Exercise('Отжимания'), 5))
+        assert 20 == exerciseExecution.remaind()
