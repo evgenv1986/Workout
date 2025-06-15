@@ -1,14 +1,11 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from .forms import ExerciseExecuteForm
+from Exercise.Step import ExerciseStep
 
-class ExerciseStep:
-    title: str
-    reps: int
-    def __init__(self, title, reps):
-        self.title = title
-        self.reps = reps
+
+
+from .forms import ExerciseExecuteForm
 
 def exercise_execute(request):        
     if request.method == 'GET':
