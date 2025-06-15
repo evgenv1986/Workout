@@ -12,7 +12,8 @@ class ExerciseStep:
 
 def exercise_execute(request):        
     if request.method == 'GET':
-        form = ExerciseExecuteForm ()
+        exercise_title = "Отжимания"
+        form = ExerciseExecuteForm (exercise_title = exercise_title)
         return render (
             request,
             'execution/workout/exercise/excercise2.html',
@@ -23,7 +24,10 @@ def exercise_execute(request):
         form = ExerciseExecuteForm(request.POST)
         if form.is_valid():
             request.session['reps'] = form.cleaned_data['reps']
-            reps = request.session['reps']
+            reps = request.session['exercise_reps']
+            title = form.cleaned_data['exercise_title']
+            request.session['exercise_title'] = title
+            
         
         title = request.POST.get('exercise_title')
         reps = request.POST.get('exercise_reps')
