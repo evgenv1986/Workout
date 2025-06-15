@@ -24,3 +24,10 @@ class TestExerciseExecution:
                 Exercise('Отжимания'), 
                 3)
         )
+    def test_remaind(self):
+        assert 25 == \
+            ExerciseExecution (
+            ExerciseTask(
+                Exercise('Отжимания'),
+                25)) \
+                .remaind()
