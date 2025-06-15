@@ -1,0 +1,97 @@
+-- Active: 1742824001382@@127.0.0.1@5432
+Установить путь к питону в переменную окружения:
+echo 'export PATH="/opt/homebrew/opt/python@3.11/libexec/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+
+Проверить:
+python3 --version
+
+Создать виртуальное окружение:
+deactivate  # Выйти из текущего окружения (если было)
+rm -rf venv  # Удалить старое окружение
+python3 -m venv venv  # Создать новое
+source venv/bin/activate  # Активировать
+
+Установить зависимости из файла requirements.txt:
+pip install -r requirements.txt
+
+
+Установить python, выбрал способ устновки в докер контейнер:
+docker run -it --rm -v "/Users/evgeny/Documents/Projects/Education/Python/blog":/app 
+python:3.11 bash -c "python -m venv /app/venv && 
+source /app/venv/bin/activate && pip install requests && 
+python -c 'import sys; print(sys.prefix)'"
+
+Альтернативный вариант запуска python в контейнере и внутри него в виртуальном окружении:
+1.) Создать Dockerfile:
+        FROM python as builder
+
+        WORKDIR /app
+
+        # Создание виртуального окружения
+        RUN python -m venv /opt/venv
+        ENV PATH="/opt/venv/bin:$PATH"
+
+        # Установка зависимостей
+        COPY requirements.txt .
+        RUN pip install --no-cache-dir -r requirements.txt
+
+        # Копирование кода
+        COPY . .
+
+        # Активация venv при входе в контейнер
+        SHELL ["/bin/bash", "-c"]
+        RUN echo "source /opt/venv/bin/activate" >> ~/.bashrc
+2.) Собрать образ и запустить контейнер:
+        docker build -t python-venv-app .
+        docker run -it --rm python-venv-app bash
+
+Активировать виртуальное окружение:
+source venv/bin/activate 
+
+Установить django:
+python3 -m pip install django
+
+Проверка установки джанго:
+python3 -m django --version
+
+Создание стартового проекта(главного - как точка входа):
+python3 -m django startproject Blog_Solution
+
+# Создать целевой проект для ...
+django-admin startapp my_app_name
+
+При запуске приложения возникло сообщение о том что проект не работает как нужно, но сервер запустился,
+для исправления нужно сделать миграции:
+python3 manage.py migrate
+
+
+Добавить режим debug в VS Code:
+        command+shift+p
+        debug...
+        add...
+        python...
+
+Запуск приложения в режиме разработки запускается командой:
+python blog_config/manage.py runserver --settings=blog_config.settings.local
+Либо перед запуском приложения выполнить команду в терминале:
+        export DJANGO_SETTINGS_MODULE=blog_config.settings.local
+        и запускать проект командой:
+                python blog_config/manage.py runserver
+
+Запуск приложения в режиме продакшен запускается командой:
+python blog_config/manage.py runserver --settings=blog_config.settings.prod
+
+Запуск приложения в докер контейнере:
+docker build -t python-venv-app .  # - не обязательно запускать
+docker compose up
+docker-compose down && docker-compose up 
+
+# Активация виртуального окружения
+source venv/bin/activate
+
+# Создал проект для аутентификации
+django-admin startapp auth_service
+в файл blog_config/settings/base.py добавил 
+в INSTALLED_APPS = ['auth_service.apps.AuthServiceConfig',...]
+выполнил команду python manage.py migrate
