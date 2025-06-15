@@ -1,4 +1,4 @@
-from app.workout_django.Exercise import Exercise
+from Exercise import Exercise
 
 
 class ExerciseStep:

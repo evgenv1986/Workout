@@ -2,6 +2,9 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 from Exercise.Step.ExerciseStep import ExerciseStep
+from Exercise.Exercise import Exercise
+from Exercise.ExerciseExecution import ExerciseExecution
+from Exercise.ExerciseTask import ExerciseTask
 
 from .forms import ExerciseExecuteForm
 
@@ -31,9 +34,18 @@ def exercise_execute(request):
         request.session['reps'] = reps
         
         step : ExerciseStep = ExerciseStep (title, reps)
+        
+        exerciseExecution = ExerciseExecution (
+                ExerciseTask(
+                    Exercise(title),
+                    25))
+        exerciseExecution.execute(ExerciseStep(Exercise(title), reps))
+        # assert 20 == exerciseExecution.remaind()
+        
         # if not reps:
             # return HttpResponse("Пожалуйста, выберите количество повторений")
     
         return HttpResponse (
-            f'step = {step.reps}')
+            f'Вы вполнили = {reps} повторений Осталось выполнить {exerciseExecution.remaind()}'
+        )
     

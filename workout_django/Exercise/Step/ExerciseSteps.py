@@ -1,4 +1,4 @@
-from app.workout_django.Exercise.Step.ExerciseStep import ExerciseStep
+from Exercise.Step.ExerciseStep import ExerciseStep
 
 
 class ExerciseSteps:
@@ -8,8 +8,8 @@ class ExerciseSteps:
     def add(self, exerciseStep: ExerciseStep):
         self._steps.append (exerciseStep)
         pass
-    def reps(self):
+    def reps(self)-> int:
         sum: int = 0
         for step in self._steps:
-            sum +=  step.reps()
+            sum += int (step.reps())
         return sum

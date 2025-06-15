@@ -1,7 +1,7 @@
-from app.workout_django.Exercise import Exercise
-from app.workout_django.Exercise.ExerciseTask import ExerciseTask
-from app.workout_django.Exercise.Step.ExerciseStep import ExerciseStep
-from app.workout_django.Exercise.Step.ExerciseSteps import ExerciseSteps
+from Exercise import Exercise
+from Exercise.ExerciseTask import ExerciseTask
+from Exercise.Step.ExerciseStep import ExerciseStep
+from Exercise.Step.ExerciseSteps import ExerciseSteps
 
 
 class ExerciseExecution:
