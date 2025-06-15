@@ -4,5 +4,5 @@ from . import views
 app_name = 'excercise_execution'
 
 urlpatterns = [
-    path('', views.input_exercise_reps, name='input_exercise_reps'),
+    path('', views.exercise_execute, name='input_exercise_reps'),
 ]
