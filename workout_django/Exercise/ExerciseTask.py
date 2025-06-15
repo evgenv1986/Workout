@@ -2,4 +2,10 @@ from app.workout_django.Exercise import Exercise
 
 
 class ExerciseTask:
-    def __init__(self, excercise: Exercise, reps: int): pass
+    _exercise: Exercise
+    _reps: int
+    def __init__(self, exercise: Exercise, reps: int): 
+        self._exercise = exercise
+        self._reps = reps
+    def reps(self):
+        return self._reps
