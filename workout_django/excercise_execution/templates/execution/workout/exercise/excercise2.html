@@ -78,10 +78,12 @@
 </head>
 <body>
     <h1>Тренировочный трекер (без JS)</h1>
-    <div class="exercise-name" >Отжимания</div>
-     {{form.exercise_title.label}}
     
     <form action="/excercise_execution/" method="POST">
+        {% csrf_token %} 
+        <!-- <div class="exercise_title" name="exercise_title" >Отжимания</div> -->
+        <!-- <span name="exercise_title">{{exercise_title}}</div>   -->
+        <input type="hidden" name="exercise_title" value="{{ exercise_title }}">
         <div class="reps-container">
             <!-- Вручную создаем 30 радиокнопок -->
             <input type="radio" name="reps" id="rep1" class="rep-radio" value="1">
