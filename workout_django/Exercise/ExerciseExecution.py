@@ -12,4 +12,4 @@ class ExerciseExecution:
     def remaind(self): 
         return (
             self._exerciseTask.reps() - 
-            self._exerciseSteps.sumReps())
+            self._exerciseSteps.sum_reps())
