@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тренировочный трекер (без JS)</title>
+    <title>Тренировочный трекер</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -15,6 +15,16 @@
         h1 {
             text-align: center;
             color: #333;
+        }
+        
+        .exercise-title {
+            font-size: 20px;
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            font-weight: bold;
         }
         
         .reps-container {
@@ -42,19 +52,21 @@
             cursor: pointer;
             text-align: center;
             line-height: 40px;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
         }
         
         /* Меняем цвет при выборе */
         .rep-radio:checked + .rep-label {
-            background-color: #add8e6; /* светло-синий */
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
         }
         
         .save-btn {
             display: block;
             width: 200px;
             height: 50px;
-            margin: 0 auto;
+            margin: 20px auto;
             background-color: #4CAF50;
             color: white;
             border: none;
@@ -68,72 +80,41 @@
             background-color: #45a049;
         }
         
-        .exercise-name {
+        .form-errors {
+            color: #d9534f;
+            margin: 15px 0;
             text-align: center;
-            margin-bottom: 20px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-         /* Стили для поля с названием упражнения */
-        .exercise-title-input {
-            width: 100%;
-            padding: 10px;
-            font-size: 18px;
-            text-align: center;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            background-color: #f9f9f9;
         }
     </style>
 </head>
 <body>
-    <h1>Тренировочный трекер (без JS)</h1>
+    <h1>Тренировочный трекер</h1>
     
-    <form action="/excercise_execution/" method="POST">
-        {% csrf_token %} 
-        {{ form.exercise_title }}
-        <!-- <div class="exercise_title" name="exercise_title" >Отжимания</div> -->
-        <!-- <span name="exercise_title">{{exercise_title}}</div>   -->
-        <input type="hidden" name="exercise_title" value="{{ exercise_title }}">
-        <div class="reps-container">
-            <!-- Вручную создаем 30 радиокнопок -->
-            <input type="radio" name="reps" id="rep1" class="rep-radio" value="1">
-            <label for="rep1" class="rep-label">1</label>
-            
-            <input type="radio" name="reps" id="rep2" class="rep-radio" value="2">
-            <label for="rep2" class="rep-label">2</label>
-            
-            <input type="radio" name="reps" id="rep3" class="rep-radio" value="3">
-            <label for="rep3" class="rep-label">3</label>
-            
-            <!-- Продолжаем до 30 -->
-            <input type="radio" name="reps" id="rep4" class="rep-radio" value="4">
-            <label for="rep4" class="rep-label">4</label>
-            
-            <input type="radio" name="reps" id="rep5" class="rep-radio" value="5">
-            <label for="rep5" class="rep-label">5</label>
-            
-            <input type="radio" name="reps" id="rep6" class="rep-radio" value="6">
-            <label for="rep6" class="rep-label">6</label>
-            
-            <input type="radio" name="reps" id="rep7" class="rep-radio" value="7">
-            <label for="rep7" class="rep-label">7</label>
-            
-            <input type="radio" name="reps" id="rep8" class="rep-radio" value="8">
-            <label for="rep8" class="rep-label">8</label>
-            
-            <input type="radio" name="reps" id="rep9" class="rep-radio" value="9">
-            <label for="rep9" class="rep-label">9</label>
-            
-            <input type="radio" name="reps" id="rep10" class="rep-radio" value="10">
-            <label for="rep10" class="rep-label">10</label>
-            
-            <!-- И так далее до 30... -->
-            <!-- Для краткости я показал только первые 10, но в реальном коде нужно добавить все 30 -->
-        </div>
+    <form method="POST">
         {% csrf_token %}
+        
+        <!-- Поле с названием упражнения -->
+        <div class="exercise-title">
+            {{ form.exercise_title.value }}
+        </div>
+        
+        <!-- Вывод ошибок формы -->
+        {% if form.errors %}
+            <div class="form-errors">
+                Пожалуйста, выберите количество повторений
+            </div>
+        {% endif %}
+        
+        <!-- Контейнер с кнопками повторений -->
+        <div class="reps-container">
+            {% for radio in form.reps %}
+                {{ radio.tag }}
+                <label for="{{ radio.id_for_label }}" class="rep-label">
+                    {{ radio.choice_label }}
+                </label>
+            {% endfor %}
+        </div>
+        
         <button type="submit" class="save-btn">Сохранить</button>
     </form>
 </body>
