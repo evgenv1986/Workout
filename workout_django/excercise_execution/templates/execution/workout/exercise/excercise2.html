@@ -74,6 +74,18 @@
             font-size: 18px;
             font-weight: bold;
         }
+
+         /* Стили для поля с названием упражнения */
+        .exercise-title-input {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
     </style>
 </head>
 <body>
@@ -81,6 +93,7 @@
     
     <form action="/excercise_execution/" method="POST">
         {% csrf_token %} 
+        {{ form.exercise_title }}
         <!-- <div class="exercise_title" name="exercise_title" >Отжимания</div> -->
         <!-- <span name="exercise_title">{{exercise_title}}</div>   -->
         <input type="hidden" name="exercise_title" value="{{ exercise_title }}">
