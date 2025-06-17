@@ -95,13 +95,15 @@
         
         <!-- Поле с названием упражнения -->
         <div class="exercise-title">
-            {{ form.exercise_title.value }}
+            {{form.exercise_title.value}}
+            {{ form.exercise_title }}
         </div>
         
         <!-- Вывод ошибок формы -->
         {% if form.errors %}
             <div class="form-errors">
                 Пожалуйста, выберите количество повторений
+                {{ form.errors }}
             </div>
         {% endif %}
         

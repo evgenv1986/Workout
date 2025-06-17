@@ -1,5 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.views.generic.edit import FormView
+from django.urls import reverse, reverse_lazy
 
 from Exercise.Step.ExerciseStep import ExerciseStep
 from Exercise.Exercise import Exercise
@@ -8,17 +10,31 @@ from Exercise.ExerciseTask import ExerciseTask
 
 from .forms import ExerciseExecuteForm
 
-from django.views.generic.edit import FormView
-from django.urls import reverse_lazy
-from .forms import ExerciseExecutionForm
-
 
 class ExerciseExecuteView(FormView):
     template_name = 'execution/workout/exercise/excercise2.html'
-    form_class = ExerciseExecutionForm
-    success_url = reverse_lazy('exercise_success')
-    default_exercise_title = 'Отжимания'  # Значение по умолчанию
+    form_class = ExerciseExecuteForm
+    # success_url = reverse_lazy('exercise_success')
+    # default_exercise_title = 'Отжимания'  # Значение по умолчанию
 
+    def post(self, request, *args, **kwargs):
+        print("Raw POST data:", request.POST)  # Что действительно пришло с формы
+        form = self.get_form()
+        if form.is_valid():
+            print("Valid form data:", form.cleaned_data)
+            return self.form_valid(form)
+        else:
+            print("Form errors:", form.errors)
+            return self.form_invalid(form)
+
+    def get_success_url(self):
+        """Динамически генерируем URL для перенаправления"""
+        return HttpResponse (
+            f'Вы вполнили '
+        )
+        exercise_title = self.request.session.get('exercise_title', 'Отжимания')
+        return reverse('/', kwargs={'exercise_title': exercise_title})
+    
     def get_initial(self):
         """Получаем начальное значение для exercise_title из GET-параметра"""
         initial = super().get_initial()
@@ -48,7 +64,11 @@ class ExerciseExecuteView(FormView):
         
     def form_valid(self, form):
         """Обработка валидной формы"""
+        print("POST data:", self.request.POST)  # Отладка
+        print("Form data:", form.cleaned_data)  # Отладка
+        
         title = form.cleaned_data['exercise_title']
+        title = form.cleaned_data.get('exercise_title')
         reps = form.cleaned_data['reps']
         
         self.request.session['exercise_title'] = title
@@ -60,7 +80,10 @@ class ExerciseExecuteView(FormView):
         
         self.request.session['remaining'] = exerciseExecution.remaind()
         
-        return super().form_valid(form)
+        return HttpResponse (
+            f'Вы вполнили {title}, количество повторений = {reps} повторений Осталось выполнить {exerciseExecution.remaind()}'
+        )
+        # return super().form_valid(form)
 
 
 def exercise_execute(request):        
