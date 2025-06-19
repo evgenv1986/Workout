@@ -17,4 +17,9 @@ class TestExerciseTask:
             Exercise('Отжимания'),
             25) \
             .reps()
-
+    def test_lap(self):
+        assert 2 == ExerciseTask(
+            exercise = Exercise('Отжимания'), 
+            reps = 25,
+            lap = 2   
+        )

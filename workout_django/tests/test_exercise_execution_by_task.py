@@ -5,18 +5,15 @@ from app.workout_django.Exercise.ExerciseExecution import ExerciseExecutionByTas
 from app.workout_django.Exercise.ExerciseTask import ExerciseTask
 from app.workout_django.Exercise.Step.ExerciseStep import ExerciseStep
 
-class ExerciseExecution:
-    def execute(self, exerciseStep: ExerciseStep, reps: int): pass
 
-class TestExerciseExecution:
+
+class TestExerciseExecutionByTask:
     def test_exercise_execution_creation(self):
-        exercise = ExerciseExecution ()
-        exercise.execute (
-            ExerciseStep(
-                Exercise('pullups'), 25))
-        
-        
-        
+        execution = ExerciseExecutionByTask (
+            ExerciseTask(
+                Exercise('Отжимания'),
+                25),
+        )
     def test_execution(self):
         execution = ExerciseExecutionByTask (
             ExerciseTask(

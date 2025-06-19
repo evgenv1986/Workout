@@ -1,11 +1,11 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views.generic.edit import FormView
 from django.urls import reverse, reverse_lazy
 
 from Exercise.Step.ExerciseStep import ExerciseStep
 from Exercise.Exercise import Exercise
-from Exercise.ExerciseExecution import ExerciseExecution
+from Exercise.ExerciseExecution import ExerciseExecutionByTask
 from Exercise.ExerciseTask import ExerciseTask
 
 from .forms import ExerciseExecuteForm
@@ -74,7 +74,7 @@ class ExerciseExecuteView(FormView):
         self.request.session['exercise_title'] = title
         self.request.session['reps'] = reps
         
-        exerciseExecution = ExerciseExecution(
+        exerciseExecution = ExerciseExecutionByTask(
             ExerciseTask(Exercise(title), 25))
         exerciseExecution.execute(ExerciseStep(Exercise(title), reps))
         
@@ -85,6 +85,38 @@ class ExerciseExecuteView(FormView):
         )
         # return super().form_valid(form)
 
+def exercise_step(request):
+    if request.method == 'GET':
+        return render (
+            request,
+            'execution/workout/exercise/step/step.html')
+        
+    if request.method == 'POST':
+        # title = request.POST.get('exercise_title')
+        # request.session['exercise_title'] = title
+        
+        
+        
+        reps = request.POST.get('reps')
+        if request.session.get('exercise_execution') is None:
+            request.session['exercise_execution'] = [
+                ExerciseStep(
+                    Exercise('pullups'), 
+                    reps)
+                .to_dict()
+            ]
+        
+        # нужен тест класс и реальный класс, и метод тестирования добавления в сессию, что бы добавлять шаг
+        step_in_session = ExerciseStepInSession(
+            request.session, 
+            ExerciseStep(
+                Exercise('pullups'), 
+                reps))
+        
+        request.session['reps'] = reps
+        return render (request,
+            'execution/workout/exercise/step/step.html')
+    
 
 def exercise_execute(request):        
     if request.method == 'GET':
@@ -113,7 +145,7 @@ def exercise_execute(request):
         
         step : ExerciseStep = ExerciseStep (title, reps)
         
-        exerciseExecution = ExerciseExecution (
+        exerciseExecution = ExerciseExecutionByTask (
                 ExerciseTask(
                     Exercise(title),
                     25))

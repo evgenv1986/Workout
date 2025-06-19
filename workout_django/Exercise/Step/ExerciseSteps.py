@@ -13,3 +13,5 @@ class ExerciseSteps:
         for step in self._steps:
             sum += int (step.reps())
         return sum
+    def count(self):
+        return len(self._steps)

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ввести количество выполненных повтор</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        
+        .reps-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+        
+        /* Скрываем стандартный radio */
+        .rep-radio {
+            display: none;
+        }
+        
+        /* Стилизация label как кнопки */
+        .rep-label {
+            display: inline-block;
+            width: 60px;
+            height: 40px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: white;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            line-height: 40px;
+            transition: background-color 0.3s;
+        }
+        
+        /* Меняем цвет при выборе */
+        .rep-radio:checked + .rep-label {
+            background-color: #add8e6; /* светло-синий */
+        }
+        
+        .save-btn {
+            display: block;
+            width: 200px;
+            height: 50px;
+            margin: 0 auto;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .save-btn:hover {
+            background-color: #45a049;
+        }
+        
+        .exercise-name {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+         /* Стили для поля с названием упражнения */
+        .exercise-title-input {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ввести количество выполненных повтор</h1>
+    
+    <form action="/exercise_step/" method="POST">
+        {% csrf_token %} 
+        <!-- {{ form.exercise_title }} -->
+        <!-- <div class="exercise_title" name="exercise_title" >Отжимания</div> -->
+        <!-- <span name="exercise_title">{{exercise_title}}</div>   -->
+        <input type="hidden" name="exercise_title" value="{{ exercise_title }}">
+        <div class="reps-container">
+            <!-- Вручную создаем 30 радиокнопок -->
+            <input type="radio" name="reps" id="rep1" class="rep-radio" value="1">
+            <label for="rep1" class="rep-label">1</label>
+            
+            <input type="radio" name="reps" id="rep2" class="rep-radio" value="2">
+            <label for="rep2" class="rep-label">2</label>
+            
+            <input type="radio" name="reps" id="rep3" class="rep-radio" value="3">
+            <label for="rep3" class="rep-label">3</label>
+            
+            <!-- Продолжаем до 30 -->
+            <input type="radio" name="reps" id="rep4" class="rep-radio" value="4">
+            <label for="rep4" class="rep-label">4</label>
+            
+            <input type="radio" name="reps" id="rep5" class="rep-radio" value="5">
+            <label for="rep5" class="rep-label">5</label>
+            
+            <input type="radio" name="reps" id="rep6" class="rep-radio" value="6">
+            <label for="rep6" class="rep-label">6</label>
+            
+            <input type="radio" name="reps" id="rep7" class="rep-radio" value="7">
+            <label for="rep7" class="rep-label">7</label>
+            
+            <input type="radio" name="reps" id="rep8" class="rep-radio" value="8">
+            <label for="rep8" class="rep-label">8</label>
+            
+            <input type="radio" name="reps" id="rep9" class="rep-radio" value="9">
+            <label for="rep9" class="rep-label">9</label>
+            
+            <input type="radio" name="reps" id="rep10" class="rep-radio" value="10">
+            <label for="rep10" class="rep-label">10</label>
+            
+            <!-- И так далее до 30... -->
+            <!-- Для краткости я показал только первые 10, но в реальном коде нужно добавить все 30 -->
+        </div>
+        {% csrf_token %}
+        <button type="submit" class="save-btn">Сохранить</button>
+    </form>
+</body>
+</html>

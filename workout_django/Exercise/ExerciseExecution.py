@@ -4,7 +4,7 @@ from Exercise.Step.ExerciseStep import ExerciseStep
 from Exercise.Step.ExerciseSteps import ExerciseSteps
 
 
-class ExerciseExecution:
+class ExerciseExecutionByTask:
     _exerciseTask: ExerciseTask
     _exerciseSteps: ExerciseSteps
     def __init__(self, exerciseTask: ExerciseTask):
