@@ -89,9 +89,10 @@
     </style>
 </head>
 <body>
+    {{completed}}
     <h1>Ввести количество выполненных повтор</h1>
     
-    <form action="/exercise_step/" method="POST">
+    <form  method="POST">
         {% csrf_token %} 
         <!-- {{ form.exercise_title }} -->
         <!-- <div class="exercise_title" name="exercise_title" >Отжимания</div> -->

@@ -85,7 +85,7 @@ class ExerciseExecuteView(FormView):
         )
         # return super().form_valid(form)
 
-def exercise_step(request):
+def add_step(request):
     if request.method == 'GET':
         return render (
             request,
@@ -107,15 +107,16 @@ def exercise_step(request):
             ]
         
         # нужен тест класс и реальный класс, и метод тестирования добавления в сессию, что бы добавлять шаг
-        step_in_session = ExerciseStepInSession(
-            request.session, 
-            ExerciseStep(
-                Exercise('pullups'), 
-                reps))
+        # step_in_session = ExerciseStepInSession(
+        #     request.session, 
+        #     ExerciseStep(
+        #         Exercise('pullups'), 
+        #         reps))
         
         request.session['reps'] = reps
         return render (request,
-            'execution/workout/exercise/step/step.html')
+            'execution/workout/exercise/step/step.html', 
+            {'completed': request.POST.get('reps')})
     
 
 def exercise_execute(request):        

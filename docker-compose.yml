@@ -1,0 +1,42 @@
+services:
+
+  # db:
+  #   image: postgres
+  #   restart: always
+  #   volumes:
+  #     - ./data/db:/var/lib/postgresql/data
+  #   environment:
+  #     - POSTGRES_DB=laborant_db
+  #     - POSTGRES_USER=laborant
+  #     - POSTGRES_PASSWORD=laborant
+
+  # web:
+  #   build: .
+  #   command: python blog_config/manage.py runserver 127.0.0.1:8000
+  #   # command: ["/wait-for-it.sh", "db:5432", "--",
+  #   #   "python", "blog_config/manage.py", "runserver", 
+  #   #   "127.0.0.1:8000"]
+  #   restart: always
+  #   volumes:
+  #     - .:/blog_config
+  #   ports:
+  #     - "8000:8000"
+  #   environment:
+  #     - DJANGO_SETTINGS_MODULE=blog_config.settings.prod
+  #     - POSTGRES_DB=laborant_db
+  #     - POSTGRES_USER=laborant
+  #     - POSTGRES_PASSWORD=laborant
+  #   depends_on:
+  #     - db
+
+
+  web:
+    build: .
+    command: python workout_django/manage.py runserver 0.0.0.0:8000
+    restart: always
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=workout_django.settings
