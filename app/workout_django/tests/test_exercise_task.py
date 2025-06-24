@@ -1,8 +1,8 @@
 import pytest
 
-from app.workout_django.Exercise.Exercise import Exercise
-from app.workout_django.Exercise.ExerciseTask import ExerciseTask
-from app.workout_django.Exercise.Step.ExerciseStep import ExerciseStep
+from Exercise.Exercise import Exercise
+from Exercise.ExerciseTask import ExerciseTask
+from Exercise.Step.ExerciseStep import ExerciseStep
 
 
 
@@ -14,9 +14,9 @@ class TestExerciseTask:
         )
     def test_task_reps(self):
         assert 25 == ExerciseTask (
-            Exercise('Отжимания'),
-            25) \
-            .reps()
+                        Exercise('Отжимания'),
+                        25) \
+                        .reps()
     def test_lap(self):
         assert 2 == ExerciseTask(
             exercise = Exercise('Отжимания'), 

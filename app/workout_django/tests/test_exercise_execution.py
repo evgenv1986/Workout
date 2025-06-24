@@ -1,9 +1,9 @@
 import pytest
 
-from app.workout_django.Exercise.Exercise import Exercise
-from app.workout_django.Exercise.ExerciseExecution import ExerciseExecutionByTask
-from app.workout_django.Exercise.ExerciseTask import ExerciseTask
-from app.workout_django.Exercise.Step.ExerciseStep import ExerciseStep
+from Exercise.Exercise import Exercise
+from Exercise.ExerciseExecution import ExerciseExecutionByTask
+from Exercise.ExerciseTask import ExerciseTask
+from Exercise.Step.ExerciseStep import ExerciseStep
 
 class ExerciseExecution:
     def execute(self, exerciseStep: ExerciseStep, reps: int): pass
