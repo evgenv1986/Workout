@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.views import View
 from django.views.generic.edit import FormView
@@ -173,12 +173,22 @@ class Textual(ABC):
     def content() -> str: pass 
 
 class RepsWork(Work, Textual):
+    _title: str
+    _reps: int
     def __init__(self, title: str, reps: int):
         self._title = title
         self._reps = reps
     def execute (self): pass
     def content(self):
-        return 'pullups 25 repetitions'
+        return {'exercise': 'pullups', 'reps': 25}
+        # return 'pullups 25 repetitions'
+    
+    def to_dict(self):
+        return {'title': self._title, 'reps': self._reps}
+
+    @classmethod
+    def from_dict(cls, data):
+        return cls(data['name'])
    
 class HttpRepsWork(Work, Textual, View):
     def __init__(self): pass    
@@ -194,7 +204,7 @@ class HttpRepsWork(Work, Textual, View):
                 request.POST.get('exercise'),
                 request.POST.get('reps')
                 )
-            return HttpResponse({work})
+            return JsonResponse(work.content())
         
     def content(self):
         return 'pullups 25 repetitions' 

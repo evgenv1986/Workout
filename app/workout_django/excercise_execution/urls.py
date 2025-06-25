@@ -9,9 +9,11 @@ from .views import ExerciseExecuteView, HttpRepsWork, exercise_execute, add_step
 
 app_name = 'excercise_execution'
 
+work = HttpRepsWork()
+
 urlpatterns = [
     # path('', exercise_execute, name='input_exercise_reps'),
     # path('<str:exercise_title>/', ExerciseExecuteView.as_view(), name='exercise-custom'),
     path('add_step/', add_step, name='add_step'),
-    path('work/', HttpRepsWork().execute, name='work'),
+    path('work/', work.execute, name='work'),
 ]

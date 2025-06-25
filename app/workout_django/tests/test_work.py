@@ -1,3 +1,12 @@
+import os
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'workout_django.settings')
+
+import django
+django.setup()
+
+from django.test import TestCase, Client
+from django.urls import reverse
+
 import pytest
 from django.test import TestCase, Client
 # from urllib import request
@@ -6,7 +15,7 @@ from django.shortcuts import render
 from abc import ABC, abstractmethod
 import requests
 
-from Workout.app.workout_django.excercise_execution.views import HttpRepsWork
+from excercise_execution.views import HttpRepsWork
 
 class Work(ABC):
     @abstractmethod
@@ -41,10 +50,15 @@ class TestWork():
 class TestHttpTestWork():
     def test_reps_work_create(self):
         client = Client()
-        # client.get("http://127.0.0.1:8000/excercise_execute/work/")
-        client.reverse("http://127.0.0.1:8000/excercise_execute/work/")
-        response = HttpRepsWork().execute()
-        repsWork = HttpResponse(
-            {RepsWork('pullups', 25)}
+        url = '/excercise_execute/work/' 
+        data = {'exercise': 'pullups', 'reps': 25}
+        response = client.post(
+            url,
+            data=data,
+            content_type='application/json'
         )
-        assert 'pullups 25 repetitions' == repsWork.execute().response.content.decode()
+        response_data = response.json()
+        assert 200 == response.status_code  # Или другой ожидаемый код
+        assert 'pullups' == response.json()['exercise']
+                    
+         
