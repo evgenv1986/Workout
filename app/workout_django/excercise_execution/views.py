@@ -1,5 +1,7 @@
-from django.http import HttpResponse
+from abc import ABC, abstractmethod
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
+from django.views import View
 from django.views.generic.edit import FormView
 from django.urls import reverse, reverse_lazy
 
@@ -160,3 +162,39 @@ def exercise_execute(request):
             f'Вы вполнили = {reps} повторений Осталось выполнить {exerciseExecution.remaind()}'
         )
     
+    
+class Work(ABC):
+    @abstractmethod
+    def execute (self): pass
+    def as_string(self): pass
+    
+class Textual(ABC):
+    @abstractmethod
+    def content() -> str: pass 
+
+class RepsWork(Work, Textual):
+    def __init__(self, title: str, reps: int):
+        self._title = title
+        self._reps = reps
+    def execute (self): pass
+    def content(self):
+        return 'pullups 25 repetitions'
+   
+class HttpRepsWork(Work, Textual, View):
+    def __init__(self): pass    
+    
+    def execute (self, request: HttpRequest) -> HttpResponse: 
+        if request.method == 'GET':
+            return render (
+                request,
+                'execution/workout/exercise/step/step.html')
+        
+        if request.method == 'POST':
+            work = RepsWork(
+                request.POST.get('exercise'),
+                request.POST.get('reps')
+                )
+            return HttpResponse({work})
+        
+    def content(self):
+        return 'pullups 25 repetitions' 
