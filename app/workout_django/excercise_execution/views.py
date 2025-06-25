@@ -1,4 +1,6 @@
+from django.views.decorators.csrf import csrf_exempt
 from abc import ABC, abstractmethod
+import json
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.views import View
@@ -9,6 +11,8 @@ from Exercise.Step.ExerciseStep import ExerciseStep
 from Exercise.Exercise import Exercise
 from Exercise.ExerciseExecution import ExerciseExecutionByTask
 from Exercise.ExerciseTask import ExerciseTask
+from excercise_execution.Work import RepsWork
+from excercise_execution.Work import Work, TextualWork
 
 from .forms import ExerciseExecuteForm
 
@@ -163,49 +167,37 @@ def exercise_execute(request):
         )
     
     
-class Work(ABC):
-    @abstractmethod
-    def execute (self): pass
-    # def as_string(self): pass
-    
-class Textual(ABC):
-    @abstractmethod
-    def content() -> str: pass 
-
-class RepsWork(Work, Textual):
-    _title: str
-    _reps: int
-    def __init__(self, title: str, reps: int):
-        self._title = title
-        self._reps = reps
-    def execute (self): pass
-    def content(self):
-        return {'exercise': 'pullups', 'reps': 25}
-        # return 'pullups 25 repetitions'
-    
-    def to_dict(self):
-        return {'title': self._title, 'reps': self._reps}
-
-    @classmethod
-    def from_dict(cls, data):
-        return cls(data['name'])
-   
-class HttpRepsWork(Work, Textual):
-    _work: Textual
+class HttpRepsWork(TextualWork):
+    _work: RepsWork
     def __init__(self): pass    
     
-    def execute (self, request: HttpRequest) -> HttpResponse: 
+    @csrf_exempt
+    def doned_work (self, request: HttpRequest) -> HttpResponse: 
         if request.method == 'GET':
             return render (
                 request,
-                'execution/workout/exercise/step/step.html')
+                'execution/workout/exercise/step/step.html',
+                {'exercise': 'Отжимания'}
+            )
         
         if request.method == 'POST':
-            self.work = RepsWork(
-                request.POST.get('exercise'),
-                request.POST.get('reps'))
-            return JsonResponse(self.work.content())
+            data = {}        
+            content_type = request.headers.get('Content-Type', '')
+            if 'application/json' in content_type:
+                try:
+                    if not request.body:
+                        return JsonResponse({'error': 'Empty request body'}, status=400)
+                    data = json.loads(request.body)
+                except json.JSONDecodeError:
+                    return JsonResponse({'error': 'Invalid JSON format'}, status=400)
+            else:
+                # Для form-data/x-www-form-urlencoded
+                data = request.POST.dict()
+            
+            self._work = RepsWork(data.get('exercise'), data.get('reps'))
+            return JsonResponse(self._work.as_json())
         
-    def content(self):
-        return self._work.content()
-    #'pullups 25 repetitions' 
+    def as_json(self):
+        return self._work.as_json()
+    def as_string(self) -> str: 
+        return self._work.as_string()

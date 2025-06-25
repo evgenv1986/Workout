@@ -97,7 +97,14 @@
         <!-- {{ form.exercise_title }} -->
         <!-- <div class="exercise_title" name="exercise_title" >Отжимания</div> -->
         <!-- <span name="exercise_title">{{exercise_title}}</div>   -->
-        <input type="hidden" name="exercise_title" value="{{ exercise_title }}">
+        <!-- <input type="hidden" name="exercise_title" value="{{ exercise_title }}"> -->
+        <input 
+            type="text" 
+            name="exercise" 
+            value="{{ exercise }}"
+            placeholder="Введите название упражнения"
+            id="exercise"
+        >
         <div class="reps-container">
             <!-- Вручную создаем 30 радиокнопок -->
             <input type="radio" name="reps" id="rep1" class="rep-radio" value="1">

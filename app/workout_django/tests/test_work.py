@@ -15,24 +15,24 @@ from django.shortcuts import render
 from abc import ABC, abstractmethod
 import requests
 
-from excercise_execution.views import HttpRepsWork
+from excercise_execution.views import HttpRepsWork, RepsWork
 
-class Work(ABC):
-    @abstractmethod
-    def execute (self): pass
-    def as_string(self): pass
+# class Work(ABC):
+#     @abstractmethod
+#     def execute (self): pass
+#     def as_string(self): pass
     
-class Textual(ABC):
-    @abstractmethod
-    def content() -> str: pass 
+# class Textual(ABC):
+#     @abstractmethod
+#     def content() -> str: pass 
 
-class RepsWork(Work, Textual):
-    def __init__(self, title: str, reps: int):
-        self._title = title
-        self._reps = reps
-    def execute (self): pass
-    def content(self):
-        return 'pullups 25 repetitions'
+# class RepsWork(Work, Textual):
+#     def __init__(self, title: str, reps: int):
+#         self._title = title
+#         self._reps = reps
+#     def execute (self): pass
+#     def content(self):
+#         return 'pullups 25 repetitions'
    
    
 class TestWork():
@@ -41,15 +41,15 @@ class TestWork():
         
     def test_RepsWork_execute(self):
         repsWork = RepsWork('pullups', 25)
-        repsWork.execute()
+        repsWork.doned_work()
         
     def test_work_as_string(self):
         work = RepsWork('pullups', 25)
-        assert 'pullups 25 repetitions' == work.content()
+        assert 'pullups 25 repetitions' == work.as_string()
 
 class TestHttpTestWork():
     def test_reps_work_create(self):
-        client = Client()
+        client = Client(enforce_csrf_checks=False)
         url = '/excercise_execute/work/' 
         data = {'exercise': 'pullups', 'reps': 25}
         response = client.post(
