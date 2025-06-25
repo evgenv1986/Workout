@@ -195,9 +195,32 @@ class HttpRepsWork(TextualWork):
                 data = request.POST.dict()
             
             self._work = RepsWork(data.get('exercise'), data.get('reps'))
-            return JsonResponse(self._work.as_json())
+            # return JsonResponse(self._work.as_json())
+            # return (self._work.as_json())
+            return (self._work)
         
     def as_json(self):
         return self._work.as_json()
     def as_string(self) -> str: 
         return self._work.as_string()
+    
+
+class TaskExecutable(ABC):
+    @abstractmethod
+    def execute(self): pass
+
+class TaskExecutionHttp (TaskExecutable):
+    def execute(self, request):
+        if request.method == 'GET':
+            return HttpResponse(HttpRepsWork().doned_work(request))
+       
+        if request.method == 'POST':
+            data = {}        
+            work = HttpRepsWork().doned_work(request)
+            task = ExerciseTask(Exercise('Отжимания'), 125, 3)
+            exerciseExecution = ExerciseExecutionByTask (task)
+            exerciseExecution.executeWork(work)
+            return HttpResponse(exerciseExecution.remaind())
+       
+        
+            

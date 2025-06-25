@@ -7,7 +7,8 @@ class RepsWork(TextualWork):
     def __init__(self, exercise: str, reps: int):
         self._exercise = exercise
         self._reps = reps
-    def doned_work (self): pass
+    def doned_work (self): 
+        return self._reps
     def as_json(self):
         return {'exercise': self._exercise, 'reps': self._reps}
     def as_string(self) -> str: 
