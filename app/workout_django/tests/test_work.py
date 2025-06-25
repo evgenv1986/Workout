@@ -60,5 +60,6 @@ class TestHttpTestWork():
         response_data = response.json()
         assert 200 == response.status_code  # Или другой ожидаемый код
         assert 'pullups' == response.json()['exercise']
+        assert 25 == response.json()['reps']
                     
          

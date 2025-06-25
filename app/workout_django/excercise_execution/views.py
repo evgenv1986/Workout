@@ -166,7 +166,7 @@ def exercise_execute(request):
 class Work(ABC):
     @abstractmethod
     def execute (self): pass
-    def as_string(self): pass
+    # def as_string(self): pass
     
 class Textual(ABC):
     @abstractmethod
@@ -190,7 +190,8 @@ class RepsWork(Work, Textual):
     def from_dict(cls, data):
         return cls(data['name'])
    
-class HttpRepsWork(Work, Textual, View):
+class HttpRepsWork(Work, Textual):
+    _work: Textual
     def __init__(self): pass    
     
     def execute (self, request: HttpRequest) -> HttpResponse: 
@@ -200,11 +201,11 @@ class HttpRepsWork(Work, Textual, View):
                 'execution/workout/exercise/step/step.html')
         
         if request.method == 'POST':
-            work = RepsWork(
+            self.work = RepsWork(
                 request.POST.get('exercise'),
-                request.POST.get('reps')
-                )
-            return JsonResponse(work.content())
+                request.POST.get('reps'))
+            return JsonResponse(self.work.content())
         
     def content(self):
-        return 'pullups 25 repetitions' 
+        return self._work.content()
+    #'pullups 25 repetitions' 
