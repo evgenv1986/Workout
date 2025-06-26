@@ -1,2 +1,3 @@
 #!/bin/bash
-docker-compose down && docker compose up
+docker compose build
+docker compose stop && docker compose up -d
