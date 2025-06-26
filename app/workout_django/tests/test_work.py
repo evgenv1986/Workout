@@ -15,7 +15,7 @@ from django.shortcuts import render
 from abc import ABC, abstractmethod
 import requests
 
-from excercise_execution.views import HttpRepsWork, RepsWork
+from excercise_execution.views import HttpWork, RepsWork
 
 # class Work(ABC):
 #     @abstractmethod
@@ -41,11 +41,12 @@ class TestWork():
         
     def test_RepsWork_execute(self):
         repsWork = RepsWork('pullups', 25)
-        repsWork.doned_work()
+        repsWork.work()
         
     def test_work_as_string(self):
         work = RepsWork('pullups', 25)
         assert 'pullups 25 repetitions' == work.as_string()
+        
 
 class TestHttpTestWork():
     def test_reps_work_create(self):
@@ -62,4 +63,8 @@ class TestHttpTestWork():
         assert 'pullups' == response.json()['exercise']
         assert 25 == response.json()['reps']
                     
-         
+    def test_somth(self):
+        client = Client(enforce_csrf_checks=False)
+        url = 'http://127.0.0.1:8000/excercise_execute/work/' 
+        response = requests.get(url)
+        assert 2 == 1+1
