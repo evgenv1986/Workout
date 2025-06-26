@@ -1,7 +1,7 @@
 from django.views.decorators.csrf import csrf_exempt
 from abc import ABC, abstractmethod
 import json
-from django.http import HttpRequest, HttpResponse, JsonResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render
 from django.views import View
 from django.views.generic.edit import FormView
@@ -195,9 +195,10 @@ class HttpWork(TextualWork):
                 data = request.POST.dict()
             
             self._work = RepsWork(data.get('exercise'), data.get('reps'))
-            return JsonResponse(self._work.as_json())
-            # return (self._work.as_json())
-            # return (self._work)
+            # return HttpResponseRedirect ('/excercise_execute/work/') # переадресация на ту же страницу ввода выполненного упражнения
+            return JsonResponse(self._work.as_json()) # возврат выволненного упражнения ввиде json
+            # return (self._work.as_json()) # 
+            # return (self._work)  # возврат ввиде доменного объекта
         
     def as_json(self):
         return self._work.as_json()
@@ -209,18 +210,34 @@ class TaskExecutable(ABC):
     @abstractmethod
     def execute(self): pass
 
+
+class WorkRequestDict():
+    def __init__(self, request):
+        self._request = request
+    def work(self):
+        return RepsWork (
+            self._request.POST.dict()['exercise'],
+            self._request.POST.dict()['reps']
+        )
+
 class TaskExecutionHttp (TaskExecutable):
     def execute(self, request):
         if request.method == 'GET':
             return HttpResponse(HttpWork().work(request))
        
         if request.method == 'POST':
-            data = {}        
-            work = HttpWork().work(request)
+            data = request.POST.dict()  
+            exercise = data['exercise']
+            reps = data['reps']
+            work = WorkRequestDict(request).work() 
+            # work = HttpWork().work(request)
             task = ExerciseTask(Exercise('Отжимания'), 125, 3)
             exerciseExecution = ExerciseExecutionByTask (task)
             exerciseExecution.executeWork(work)
-            return HttpResponse(exerciseExecution.remaind())
+            remaind = exerciseExecution.remaind()
+            return HttpResponseRedirect ( ('/excercise_execute/task-execution/'))
+            # return HttpResponseRedirect('/excercise_execute/work/')
+            # return HttpResponse(exerciseExecution.remaind())
        
         
             

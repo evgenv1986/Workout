@@ -20,7 +20,7 @@ class ExerciseExecutionByTask:
     def remaind(self): 
         works_reps = 0
         for w in self._works:
-            works_reps += int (w.doned_work())
+            works_reps += int (w.work())
         return (
             self._exerciseTask.reps() - 
             # self._exerciseSteps.reps()
