@@ -10,10 +10,10 @@ cd "$PROJECT_DIR" || { echo "Ошибка: не удалось перейти в
 source venv/bin/activate || { echo "Ошибка: не удалось активировать виртуальное окружение"; exit 1; }
 
 # Переходим в директорию Django-проекта
-cd workout_django || { echo "Ошибка: не удалось перейти в директорию workout_django"; exit 1; }
+# cd workout_django || { echo "Ошибка: не удалось перейти в директорию workout_django"; exit 1; }
 
 # Запускаем сервер разработки
-python manage.py runserver 8000 || { echo "Ошибка: не удалось запустить сервер"; exit 1; }
+python ./workout_django/manage.py runserver 8000 || { echo "Ошибка: не удалось запустить сервер"; exit 1; }
 
 echo "Запуск приложения $(date)" >> run.log
 
