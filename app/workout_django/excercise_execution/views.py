@@ -167,12 +167,12 @@ def exercise_execute(request):
         )
     
     
-class HttpRepsWork(TextualWork):
+class HttpWork(TextualWork):
     _work: RepsWork
     def __init__(self): pass    
     
     @csrf_exempt
-    def doned_work (self, request: HttpRequest) -> HttpResponse: 
+    def work (self, request: HttpRequest) -> HttpResponse: 
         if request.method == 'GET':
             return render (
                 request,
@@ -195,9 +195,9 @@ class HttpRepsWork(TextualWork):
                 data = request.POST.dict()
             
             self._work = RepsWork(data.get('exercise'), data.get('reps'))
-            # return JsonResponse(self._work.as_json())
+            return JsonResponse(self._work.as_json())
             # return (self._work.as_json())
-            return (self._work)
+            # return (self._work)
         
     def as_json(self):
         return self._work.as_json()
@@ -212,11 +212,11 @@ class TaskExecutable(ABC):
 class TaskExecutionHttp (TaskExecutable):
     def execute(self, request):
         if request.method == 'GET':
-            return HttpResponse(HttpRepsWork().doned_work(request))
+            return HttpResponse(HttpWork().work(request))
        
         if request.method == 'POST':
             data = {}        
-            work = HttpRepsWork().doned_work(request)
+            work = HttpWork().work(request)
             task = ExerciseTask(Exercise('Отжимания'), 125, 3)
             exerciseExecution = ExerciseExecutionByTask (task)
             exerciseExecution.executeWork(work)

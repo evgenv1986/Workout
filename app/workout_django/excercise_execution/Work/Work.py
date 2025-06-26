@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 
 class Work(ABC):
     @abstractmethod
-    def doned_work (self)-> 'Work': pass
+    def work (self)-> 'Work': pass
     
 class Textual(ABC):
     @abstractmethod
@@ -16,7 +16,7 @@ class Textual(ABC):
 
 class TextualWork(Work, Textual):
     @abstractmethod
-    def doned_work (self)-> 'Work': pass
+    def work (self)-> 'Work': pass
     @abstractmethod
     def as_json(self) -> str: pass
     @abstractmethod
