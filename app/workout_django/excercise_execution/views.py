@@ -1,3 +1,4 @@
+from django.core.cache import cache
 from django.views.decorators.csrf import csrf_exempt
 from abc import ABC, abstractmethod
 import json
@@ -229,6 +230,14 @@ class TaskExecutionHttp (TaskExecutable):
         
     def execute(self, request):
         if request.method == 'GET':
+            data = request.POST.dict()
+            # if not len(data.items()) == 0:
+            cache_key = f"temp_data_{request.user.id}"
+            work = cache.get(cache_key)
+            remaind = self.task_execution.remaind()
+            task_work = self.task_execution.task_work()
+            
+                # work = WorkRequestDict(request).work()
             return render(request,
                           'execution/workout/taskExecution/taskExecution.html',
                           {'task_execution': self.task_execution,
@@ -246,6 +255,9 @@ class TaskExecutionHttp (TaskExecutable):
             
             self.task_execution.executeWork(work)
             remaind = self.task_execution.remaind()
+            
+            cache_key = f"temp_data_{request.user.id}"
+            cache.set(cache_key, work, timeout=300)  # 5 минут
             
             # if not task.completed: повторить ввод выполнения упражнения
             return HttpResponseRedirect ('/excercise_execute/task-execution/')
