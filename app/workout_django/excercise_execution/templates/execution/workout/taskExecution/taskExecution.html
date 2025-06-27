@@ -124,12 +124,12 @@
             
             <!-- Прогресс-бар с фиксированным значением 30% -->
             <div class="progress-bar">
-                <div class="progress-fill" style="width: 30%;"></div>
+                <div class="progress-fill" style="width: {{ task_execution.executed }}%;"></div>
             </div>
             
             <div class="progress-stats">
-                <div class="completed">Выполнено: 30</div>
-                <div class="remaining">Осталось: 70</div>
+                <div class="completed">Выполнено: {{task_execution.executed}}</div>
+                <div class="remaining">Осталось: {{task_execution.remaind}}</div>
             </div>
             
             <!-- Форма для отправки данных на сервер    action="/update-progress" -->
