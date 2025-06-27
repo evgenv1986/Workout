@@ -33,3 +33,10 @@ class ExerciseExecutionByTask:
         )
     def as_json(self):
         return {self._exerciseTask._exercise._title: self._exerciseTask._reps}
+    def executed(self):
+        works_reps = 0
+        for w in self._works:
+            works_reps += int (w.work())
+        return works_reps
+    def task_work(self):
+        return self._exerciseTask.reps()
