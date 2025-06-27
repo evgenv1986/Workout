@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -89,60 +90,60 @@
     </style>
 </head>
 <body>
-    {{completed}}
-    <h1>Ввести количество выполненных повтор</h1>
-    
-    <form  method="POST">
-        {% csrf_token %} 
-        <!-- {{ form.exercise_title }} -->
-        <!-- <div class="exercise_title" name="exercise_title" >Отжимания</div> -->
-        <!-- <span name="exercise_title">{{exercise_title}}</div>   -->
-        <!-- <input type="hidden" name="exercise_title" value="{{ exercise_title }}"> -->
-        <input 
-            type="text" 
-            name="exercise" 
-            value="{{ exercise }}"
-            placeholder="Введите название упражнения"
-            id="exercise"
-        >
-        <div class="reps-container">
-            <!-- Вручную создаем 30 радиокнопок -->
-            <input type="radio" name="reps" id="rep1" class="rep-radio" value="1">
-            <label for="rep1" class="rep-label">1</label>
-            
-            <input type="radio" name="reps" id="rep2" class="rep-radio" value="2">
-            <label for="rep2" class="rep-label">2</label>
-            
-            <input type="radio" name="reps" id="rep3" class="rep-radio" value="3">
-            <label for="rep3" class="rep-label">3</label>
-            
-            <!-- Продолжаем до 30 -->
-            <input type="radio" name="reps" id="rep4" class="rep-radio" value="4">
-            <label for="rep4" class="rep-label">4</label>
-            
-            <input type="radio" name="reps" id="rep5" class="rep-radio" value="5">
-            <label for="rep5" class="rep-label">5</label>
-            
-            <input type="radio" name="reps" id="rep6" class="rep-radio" value="6">
-            <label for="rep6" class="rep-label">6</label>
-            
-            <input type="radio" name="reps" id="rep7" class="rep-radio" value="7">
-            <label for="rep7" class="rep-label">7</label>
-            
-            <input type="radio" name="reps" id="rep8" class="rep-radio" value="8">
-            <label for="rep8" class="rep-label">8</label>
-            
-            <input type="radio" name="reps" id="rep9" class="rep-radio" value="9">
-            <label for="rep9" class="rep-label">9</label>
-            
-            <input type="radio" name="reps" id="rep10" class="rep-radio" value="10">
-            <label for="rep10" class="rep-label">10</label>
-            
-            <!-- И так далее до 30... -->
-            <!-- Для краткости я показал только первые 10, но в реальном коде нужно добавить все 30 -->
-        </div>
-        {% csrf_token %}
-        <button type="submit" class="save-btn">Сохранить</button>
-    </form>
+        {{completed}}
+        <h1>Ввести количество выполненных повтор</h1>
+        
+        <form  method="POST">
+            {% csrf_token %} 
+            <!-- {{ form.exercise_title }} -->
+            <!-- <div class="exercise_title" name="exercise_title" >Отжимания</div> -->
+            <!-- <span name="exercise_title">{{exercise_title}}</div>   -->
+            <!-- <input type="hidden" name="exercise_title" value="{{ exercise_title }}"> -->
+            <input 
+                type="text" 
+                name="exercise" 
+                value="{{ exercise }}"
+                placeholder="Введите название упражнения"
+                id="exercise"
+            >
+            <div class="reps-container">
+                <!-- Вручную создаем 30 радиокнопок -->
+                <input type="radio" name="reps" id="rep1" class="rep-radio" value="1">
+                <label for="rep1" class="rep-label">1</label>
+                
+                <input type="radio" name="reps" id="rep2" class="rep-radio" value="2">
+                <label for="rep2" class="rep-label">2</label>
+                
+                <input type="radio" name="reps" id="rep3" class="rep-radio" value="3">
+                <label for="rep3" class="rep-label">3</label>
+                
+                <!-- Продолжаем до 30 -->
+                <input type="radio" name="reps" id="rep4" class="rep-radio" value="4">
+                <label for="rep4" class="rep-label">4</label>
+                
+                <input type="radio" name="reps" id="rep5" class="rep-radio" value="5">
+                <label for="rep5" class="rep-label">5</label>
+                
+                <input type="radio" name="reps" id="rep6" class="rep-radio" value="6">
+                <label for="rep6" class="rep-label">6</label>
+                
+                <input type="radio" name="reps" id="rep7" class="rep-radio" value="7">
+                <label for="rep7" class="rep-label">7</label>
+                
+                <input type="radio" name="reps" id="rep8" class="rep-radio" value="8">
+                <label for="rep8" class="rep-label">8</label>
+                
+                <input type="radio" name="reps" id="rep9" class="rep-radio" value="9">
+                <label for="rep9" class="rep-label">9</label>
+                
+                <input type="radio" name="reps" id="rep10" class="rep-radio" value="10">
+                <label for="rep10" class="rep-label">10</label>
+                
+                <!-- И так далее до 30... -->
+                <!-- Для краткости я показал только первые 10, но в реальном коде нужно добавить все 30 -->
+            </div>
+            {% csrf_token %}
+            <button type="submit" class="save-btn">Сохранить</button>
+        </form>
 </body>
 </html>

@@ -222,10 +222,20 @@ class WorkRequestDict():
 
 class TaskExecutionHttp (TaskExecutable):
     task : Task
-    exerciseExecution : ExerciseExecutionByTask
+    task_execution : ExerciseExecutionByTask
+    def __init__(self):
+        self.task = Task(Exercise('Отжимания'), 125, 3)
+        self.task_execution = ExerciseExecutionByTask (self.task)
+        
     def execute(self, request):
         if request.method == 'GET':
-            return HttpResponse(HttpWork().work(request))
+            return render(request,
+                          'execution/workout/taskExecution/taskExecution.html',
+                          {'task_execution': self.task_execution,
+                           'work_execute': "execution/workout/exercise/step/step.html"
+                           })
+            # if self.taskExecution.remaind() > 0:
+            # return HttpResponse(HttpWork().work(request))
        
         if request.method == 'POST':
             data = request.POST.dict()  
@@ -233,10 +243,9 @@ class TaskExecutionHttp (TaskExecutable):
             reps = data['reps']
             work = WorkRequestDict(request).work() 
             # work = HttpWork().work(request)
-            task = Task(Exercise('Отжимания'), 125, 3)
-            exerciseExecution = ExerciseExecutionByTask (task)
-            exerciseExecution.executeWork(work)
-            remaind = exerciseExecution.remaind()
+            
+            self.task_execution.executeWork(work)
+            remaind = self.task_execution.remaind()
             
             # if not task.completed: повторить ввод выполнения упражнения
             return HttpResponseRedirect ('/excercise_execute/task-execution/')
