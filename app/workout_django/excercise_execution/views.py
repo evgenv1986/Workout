@@ -221,6 +221,8 @@ class WorkRequestDict():
         )
 
 class TaskExecutionHttp (TaskExecutable):
+    task : ExerciseTask
+    exerciseExecution : ExerciseExecutionByTask
     def execute(self, request):
         if request.method == 'GET':
             return HttpResponse(HttpWork().work(request))
@@ -235,7 +237,12 @@ class TaskExecutionHttp (TaskExecutable):
             exerciseExecution = ExerciseExecutionByTask (task)
             exerciseExecution.executeWork(work)
             remaind = exerciseExecution.remaind()
-            return HttpResponseRedirect ( ('/excercise_execute/task-execution/'))
+            
+            # if not task.completed: повторить ввод выполнения упражнения
+            return HttpResponseRedirect ('/excercise_execute/task-execution/')
+            # else:
+                # return подумать куда перейти
+
             # return HttpResponseRedirect('/excercise_execute/work/')
             # return HttpResponse(exerciseExecution.remaind())
        
