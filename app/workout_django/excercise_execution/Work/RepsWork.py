@@ -1,3 +1,4 @@
+from abc import ABC
 from excercise_execution.Work.Work import TextualWork
 
 

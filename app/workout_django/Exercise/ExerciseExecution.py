@@ -1,10 +1,15 @@
+from abc import ABC
 from Exercise import Exercise
 from Exercise.Task import Task
 from Exercise.Step.ExerciseStep import ExerciseStep
 from Exercise.Step.ExerciseSteps import ExerciseSteps
+from excercise_execution.Work import Workload
 from excercise_execution.Work import RepsWork
 from excercise_execution.Work import Work
 
+class TaskExecution(ABC):
+    def execute(work: Workload):pass
+    
 
 class ExerciseExecutionByTask:
     _exerciseTask: Task

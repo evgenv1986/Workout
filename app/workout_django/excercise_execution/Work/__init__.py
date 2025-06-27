@@ -1,2 +1,3 @@
 from .RepsWork import RepsWork
-from .Work import TextualWork
+from .Work import TextualWork, Work
+from .Workload import Workload
