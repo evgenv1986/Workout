@@ -2,7 +2,7 @@ import pytest
 
 from Exercise.Exercise import Exercise
 from Exercise.ExerciseExecution import ExerciseExecutionByTask
-from Exercise.ExerciseTask import ExerciseTask
+from Workout.app.workout_django.Exercise.Task import Task
 from Exercise.Step.ExerciseStep import ExerciseStep
 
 class ExerciseExecution:
@@ -19,7 +19,7 @@ class TestExerciseExecution:
         
     def test_execution(self):
         execution = ExerciseExecutionByTask (
-            ExerciseTask(
+            Task(
                 Exercise('Отжимания'),
                 25))
         execution.execute(
@@ -30,13 +30,13 @@ class TestExerciseExecution:
     def test_remaind(self):
         assert 25 == \
             ExerciseExecutionByTask (
-                ExerciseTask(
+                Task(
                     Exercise('Отжимания'),
                     25)) \
                     .remaind()
     def  test_remaind_after_execution_step(self):
         exerciseExecution = ExerciseExecutionByTask (
-                ExerciseTask(
+                Task(
                     Exercise('Отжимания'),
                     25))
         exerciseExecution.execute(ExerciseStep(Exercise('Отжимания'), 5))

@@ -10,7 +10,7 @@ from django.urls import reverse, reverse_lazy
 from Exercise.Step.ExerciseStep import ExerciseStep
 from Exercise.Exercise import Exercise
 from Exercise.ExerciseExecution import ExerciseExecutionByTask
-from Exercise.ExerciseTask import ExerciseTask
+from Exercise.Task import Task
 from excercise_execution.Work import RepsWork
 from excercise_execution.Work import Work, TextualWork
 
@@ -81,7 +81,7 @@ class ExerciseExecuteView(FormView):
         self.request.session['reps'] = reps
         
         exerciseExecution = ExerciseExecutionByTask(
-            ExerciseTask(Exercise(title), 25))
+            Task(Exercise(title), 25))
         exerciseExecution.execute(ExerciseStep(Exercise(title), reps))
         
         self.request.session['remaining'] = exerciseExecution.remaind()
@@ -153,7 +153,7 @@ def exercise_execute(request):
         step : ExerciseStep = ExerciseStep (title, reps)
         
         exerciseExecution = ExerciseExecutionByTask (
-                ExerciseTask(
+                Task(
                     Exercise(title),
                     25))
         exerciseExecution.execute(ExerciseStep(Exercise(title), reps))
@@ -221,7 +221,7 @@ class WorkRequestDict():
         )
 
 class TaskExecutionHttp (TaskExecutable):
-    task : ExerciseTask
+    task : Task
     exerciseExecution : ExerciseExecutionByTask
     def execute(self, request):
         if request.method == 'GET':
@@ -233,7 +233,7 @@ class TaskExecutionHttp (TaskExecutable):
             reps = data['reps']
             work = WorkRequestDict(request).work() 
             # work = HttpWork().work(request)
-            task = ExerciseTask(Exercise('Отжимания'), 125, 3)
+            task = Task(Exercise('Отжимания'), 125, 3)
             exerciseExecution = ExerciseExecutionByTask (task)
             exerciseExecution.executeWork(work)
             remaind = exerciseExecution.remaind()
@@ -247,4 +247,3 @@ class TaskExecutionHttp (TaskExecutable):
             # return HttpResponse(exerciseExecution.remaind())
        
         
-            

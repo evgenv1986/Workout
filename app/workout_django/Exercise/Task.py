@@ -1,7 +1,7 @@
 from Exercise import Exercise
 
 
-class ExerciseTask:
+class Task:
     _exercise: Exercise
     _reps: int
     _lap: int

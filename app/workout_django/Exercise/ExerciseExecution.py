@@ -1,5 +1,5 @@
 from Exercise import Exercise
-from Exercise.ExerciseTask import ExerciseTask
+from Exercise.Task import Task
 from Exercise.Step.ExerciseStep import ExerciseStep
 from Exercise.Step.ExerciseSteps import ExerciseSteps
 from excercise_execution.Work import RepsWork
@@ -7,10 +7,10 @@ from excercise_execution.Work import Work
 
 
 class ExerciseExecutionByTask:
-    _exerciseTask: ExerciseTask
+    _exerciseTask: Task
     _exerciseSteps: ExerciseSteps
     _works = []
-    def __init__(self, exerciseTask: ExerciseTask):
+    def __init__(self, exerciseTask: Task):
         self._exerciseTask = exerciseTask
         self._exerciseSteps = ExerciseSteps()
     def execute(self, exerciseStep: ExerciseStep):
