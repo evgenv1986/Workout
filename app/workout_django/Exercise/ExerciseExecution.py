@@ -1,4 +1,8 @@
 from abc import ABC
+from multiprocessing.connection import Client
+
+from django.shortcuts import render
+from requests import request
 from Exercise import Exercise
 from Exercise.Task import Task
 from Exercise.Step.ExerciseStep import ExerciseStep
@@ -8,8 +12,23 @@ from excercise_execution.Work import RepsWork
 from excercise_execution.Work import Work
 
 class TaskExecution(ABC):
-    def execute(work: Workload):pass
+    def execute():pass
     
+class TaskExecutionInputDataForm(TaskExecution):
+    _task : Task
+    _task_execution : 'ExerciseExecutionByTask'
+    def __init__(self, 
+                 client : Client,
+                 url : str,
+                 task_execution: TaskExecution
+                 ):
+        self._task_execution = task_execution
+    def execute(self):
+        return render(request,
+                'execution/workout/taskExecution/taskExecution.html',
+                {'task_execution': self._task_execution,
+                'work_execute': "execution/workout/exercise/step/step.html"})
+
 
 class ExerciseExecutionByTask:
     _exerciseTask: Task

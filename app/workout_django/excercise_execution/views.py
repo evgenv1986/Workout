@@ -1,3 +1,4 @@
+from http.server import BaseHTTPRequestHandler, HTTPServer
 from django.core.cache import cache
 from django.views.decorators.csrf import csrf_exempt
 from abc import ABC, abstractmethod
@@ -227,6 +228,13 @@ class TaskExecutionHttp (TaskExecutable):
     def __init__(self):
         self.task = Task(Exercise('Отжимания'), 125, 3)
         self.task_execution = ExerciseExecutionByTask (self.task)
+    
+    # def show_form_executing_work (self, request):
+        # if request.method == 'GET':
+            # return render(request,
+            #               'execution/workout/taskExecution/taskExecution.html',
+            #               {'task_execution': self.task_execution,
+            #                'work_execute': "execution/workout/exercise/step/step.html"})
         
     def execute(self, request):
         if request.method == 'GET':
@@ -268,3 +276,30 @@ class TaskExecutionHttp (TaskExecutable):
             # return HttpResponse(exerciseExecution.remaind())
        
         
+class TaskExecution(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/html')
+        self.end_headers()
+        
+        html_content = """
+        <!DOCTYPE html>
+        <html>
+        <head><title>My Page</title></head>
+        <body>
+            <h1>Hello from HTTP.Server!</h1>
+            <p>You requested: {}</p>
+        </body>
+        </html>
+        """.format(self.path)
+        
+        self.wfile.write(html_content.encode('utf-8'))
+        
+    def run():
+        server_address = ('', 8000)
+        httpd = HTTPServer(server_address, TaskExecution)
+        print("Server running on port 8000...")
+        httpd.serve_forever()
+
+    if __name__ == "__main__":
+        run()

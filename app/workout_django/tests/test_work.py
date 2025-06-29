@@ -63,8 +63,8 @@ class TestHttpTestWork():
         assert 'pullups' == response.json()['exercise']
         assert 25 == response.json()['reps']
                     
-    def test_somth(self):
+    def test_excercise_execute_show_input_form(self):
         client = Client(enforce_csrf_checks=False)
-        url = 'http://127.0.0.1:8000/excercise_execute/work/' 
-        response = requests.get(url)
-        assert 2 == 1+1
+        url = '/excercise_execute/work/' 
+        response = client.get(url) 
+        assert response.status_code.__eq__(200)
