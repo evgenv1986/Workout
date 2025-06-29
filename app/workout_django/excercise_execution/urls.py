@@ -2,6 +2,9 @@ from django.urls import path
 from django.utils.encoding import escape_uri_path
 import requests
 
+from Exercise import TaskExecutionInputDataForm, ExerciseExecutionByTask, Task, Exercise
+
+
 from .views import ExerciseExecuteView, HttpWork, TaskExecutionHttp, exercise_execute, add_step
 
 # from app.workout_django.excercise_execution import views
@@ -18,4 +21,8 @@ urlpatterns = [
     path('work/', work.work, name='work'),
     path('task-execution/', taskExecutionHttp.execute, name='task-execution'),
     # path('task-execution/begin', taskExecutionHttp.show_form_executing_work, name='task-execution'),
+    path('TaskExecutionInputDataForm/', 
+         TaskExecutionInputDataForm(
+            task_execution = ExerciseExecutionByTask (Task(Exercise('Отжимания'), 125, 3)))
+         .execute, name='execute'),
 ]

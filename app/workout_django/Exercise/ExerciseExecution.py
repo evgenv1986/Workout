@@ -17,13 +17,9 @@ class TaskExecution(ABC):
 class TaskExecutionInputDataForm(TaskExecution):
     _task : Task
     _task_execution : 'ExerciseExecutionByTask'
-    def __init__(self, 
-                 client : Client,
-                 url : str,
-                 task_execution: TaskExecution
-                 ):
+    def __init__(self, task_execution: TaskExecution):
         self._task_execution = task_execution
-    def execute(self):
+    def execute(self, request):
         return render(request,
                 'execution/workout/taskExecution/taskExecution.html',
                 {'task_execution': self._task_execution,
