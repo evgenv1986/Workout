@@ -15,7 +15,7 @@ from django.shortcuts import render
 from abc import ABC, abstractmethod
 import requests
 
-from excercise_execution.views import HttpWork, RepsWork
+from excercise_execution.views import WorkHttpGet, RepsWork
 
 # class Work(ABC):
 #     @abstractmethod

@@ -169,9 +169,30 @@ def exercise_execute(request):
         )
     
     
-class HttpWork(TextualWork):
+class WorkHttpPost(TextualWork):
+    def work_exercise (self, request: HttpRequest): 
+       if request.method == 'POST':
+            data = request.POST.dict()
+            return JsonResponse(data)
+        
+    def work (self, request: HttpRequest) -> HttpResponse: pass
+    def as_json(self) -> str: pass
+    def as_string(self) -> str: pass
+    
+class WorkHttpGet(TextualWork):
     _work: RepsWork
     def __init__(self): pass    
+    
+    def work_exercise (self, request: HttpRequest, exercise: str) -> HttpResponse: 
+        if request.method == 'GET':
+            return render (
+                request,
+                'execution/workout/exercise/step/step.html',
+                {'exercise': exercise}
+            )
+        if request.method == 'POST':
+            data = request.POST.dict()
+            return JsonResponse(data)
     
     @csrf_exempt
     def work (self, request: HttpRequest) -> HttpResponse: 
@@ -222,45 +243,26 @@ class WorkRequestDict():
             self._request.POST.dict()['reps']
         )
 
-class TaskExecutionHttp (TaskExecutable):
-    task : Task
-    task_execution : ExerciseExecutionByTask
-    def __init__(self):
-        self.task = Task(Exercise('Отжимания'), 125, 3)
-        self.task_execution = ExerciseExecutionByTask (self.task)
+class TaskExecutionHttpPost (TaskExecutable):
+    task = Task(Exercise('Отжимания'), 125, 3)
+    task_execution = ExerciseExecutionByTask (task)
     
-    # def show_form_executing_work (self, request):
-        # if request.method == 'GET':
-            # return render(request,
-            #               'execution/workout/taskExecution/taskExecution.html',
-            #               {'task_execution': self.task_execution,
-            #                'work_execute': "execution/workout/exercise/step/step.html"})
-        
     def execute(self, request):
-        if request.method == 'GET':
-            data = request.POST.dict()
-            # if not len(data.items()) == 0:
-            cache_key = f"temp_data_{request.user.id}"
-            work = cache.get(cache_key)
-            remaind = self.task_execution.remaind()
-            task_work = self.task_execution.task_work()
-            
-                # work = WorkRequestDict(request).work()
-            return render(request,
-                          'execution/workout/taskExecution/taskExecution.html',
-                          {'task_execution': self.task_execution,
-                           'work_execute': "execution/workout/exercise/step/step.html"
-                           })
-            # if self.taskExecution.remaind() > 0:
-            # return HttpResponse(HttpWork().work(request))
-       
         if request.method == 'POST':
-            data = request.POST.dict()  
-            exercise = data['exercise']
-            reps = data['reps']
+            work_http_post = WorkHttpPost()
+            work_response = work_http_post.work_exercise(request)
+            content_type = request.headers.get('Content-Type', '')
+            if 'application/json' in content_type:
+                try:
+                    if not request.body:
+                        return JsonResponse({'error': 'Empty request body'}, status=400)
+                    data = json.loads(request.body)
+                except json.JSONDecodeError:
+                    return JsonResponse({'error': 'Invalid JSON format'}, status=400)
+            else:
+                # Для form-data/x-www-form-urlencoded
+                data = request.POST.dict()
             work = WorkRequestDict(request).work() 
-            # work = HttpWork().work(request)
-            
             self.task_execution.executeWork(work)
             remaind = self.task_execution.remaind()
             
@@ -268,12 +270,78 @@ class TaskExecutionHttp (TaskExecutable):
             cache.set(cache_key, work, timeout=300)  # 5 минут
             
             # if not task.completed: повторить ввод выполнения упражнения
-            return HttpResponseRedirect ('/excercise_execute/task-execution/')
+            return HttpResponse(self.task_execution)
+        
+        
+class TaskExecutionHttpGet (TaskExecutable):
+    task : Task
+    task_execution : ExerciseExecutionByTask
+    http_work : WorkHttpGet
+    work_http_post : WorkHttpPost
+    def __init__(self):
+        self.task = Task(Exercise('Отжимания'), 125, 3)
+        self.task_execution = ExerciseExecutionByTask (self.task)
+    
+    def execute(self, request):
+        if request.method == 'GET':
+            self.http_work = WorkHttpGet()
+            response = self.http_work.work_exercise(request, exercise = self.task._exercise._title)
+            return response
+            # data = request.POST.dict()
+            
+            # data = request.POST.dict()
+            # # if not len(data.items()) == 0:
+            # cache_key = f"temp_data_{request.user.id}"
+            # work = cache.get(cache_key)
+            # remaind = self.task_execution.remaind()
+            # task_work = self.task_execution.task_work()
+            
+            #     # work = WorkRequestDict(request).work()
+            # return render(request,
+            #               'execution/workout/taskExecution/taskExecution.html',
+            #               {'task_execution': self.task_execution,
+            #                'work_execute': "execution/workout/exercise/step/step.html"
+            #                })
+            
+            # if self.taskExecution.remaind() > 0:
+            # return HttpResponse(HttpWork().work(request))
+       
+        if request.method == 'POST':
+            return TaskExecutionHttpPost().execute(request)
+            
+            # self.work_http_post = WorkHttpPost()
+            # work_response = self.work_http_post.work_exercise(request)
+            # content_type = request.headers.get('Content-Type', '')
+            # if 'application/json' in content_type:
+            #     try:
+            #         if not request.body:
+            #             return JsonResponse({'error': 'Empty request body'}, status=400)
+            #         data = json.loads(request.body)
+            #     except json.JSONDecodeError:
+            #         return JsonResponse({'error': 'Invalid JSON format'}, status=400)
+            # else:
+            #     # Для form-data/x-www-form-urlencoded
+            #     data = request.POST.dict()
+            # # data = request.POST.dict()  
+            # exercise = data['exercise']
+            # reps = data['reps']
+            # work = WorkRequestDict(request).work() 
+            # # work = HttpWork().work(request)
+            
+            # self.task_execution.executeWork(work)
+            # remaind = self.task_execution.remaind()
+            
+            # cache_key = f"temp_data_{request.user.id}"
+            # cache.set(cache_key, work, timeout=300)  # 5 минут
+            
+            # # if not task.completed: повторить ввод выполнения упражнения
+            # return HttpResponse(self.task_execution)
+            
+            # return HttpResponseRedirect ('/excercise_execute/task-execution/')
             # else:
                 # return подумать куда перейти
 
             # return HttpResponseRedirect('/excercise_execute/work/')
-            # return HttpResponse(exerciseExecution.remaind())
        
         
 class TaskExecution(BaseHTTPRequestHandler):
