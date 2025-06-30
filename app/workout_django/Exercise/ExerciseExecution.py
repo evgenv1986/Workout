@@ -35,7 +35,7 @@ class ExerciseExecutionByTask:
         self._exerciseSteps = ExerciseSteps()
     def execute(self, exerciseStep: ExerciseStep):
         self._exerciseSteps.add(exerciseStep)
-    def executeWork(self, work: RepsWork):
+    def executeWork(self, work: Work):
         self._works.append(work)
     def remaind(self): 
         works_reps = 0

@@ -1,6 +1,8 @@
 import os
 from django.conf import settings
 from django.test import TestCase
+
+from excercise_execution.Work import RepsWork
 os.environ['DJANGO_SETTINGS_MODULE'] = 'workout_django.settings' 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'workout_django.settings')
 
@@ -11,7 +13,7 @@ import requests
 
 from Exercise.Exercise import Exercise
 from Exercise.ExerciseExecution import ExerciseExecutionByTask, TaskExecution, TaskExecutionInputDataForm
-from Workout.app.workout_django.Exercise.Task import Task
+from Exercise.Task import Task
 from Exercise.Step.ExerciseStep import ExerciseStep
 
 class ExerciseExecution:
@@ -54,6 +56,15 @@ class TestExerciseExecution:
     def test_begin_execution(self):
         texec = TaskExecution()
         assert 1==1
+    
+    def  test_remaind_after_execution_work(self):
+        exerciseExecution = ExerciseExecutionByTask (
+                Task(
+                    Exercise('Отжимания'),
+                    25,
+                    3))
+        exerciseExecution.executeWork(RepsWork(Exercise('Отжимания'), 5))
+        assert 20 == exerciseExecution.remaind()
         
     
 class TestHttpTestWork(TestCase):
