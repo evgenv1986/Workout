@@ -10,7 +10,7 @@ class RepsWork(TextualWork):
         self._reps = reps
     def work (self): 
         return self._reps
-    def as_json(self):
+    def as_dict(self):
         return {'exercise': self._exercise, 'reps': self._reps}
     def as_string(self) -> str: 
         return self._exercise

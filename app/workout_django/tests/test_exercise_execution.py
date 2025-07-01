@@ -2,6 +2,7 @@ import os
 from django.conf import settings
 from django.test import TestCase
 
+from excercise_execution.views import TaskExecutionHttpGet, TaskExecutionHttpPost, WorkHttpGet, WorkHttpPost
 from excercise_execution.Work import RepsWork
 os.environ['DJANGO_SETTINGS_MODULE'] = 'workout_django.settings' 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'workout_django.settings')
@@ -82,4 +83,21 @@ class TestHttpTestWork(TestCase):
         )
         
         inputForm.execute()
+    
+    
+# TaskExecutionHttpPost.get -> TaskExecutionHttpGet.get -> WorkHttpGet.get(render form)
+# TaskExecutionHttpPost.post -> WorkHttpPost.post() -> json -> TaskExecutionHttpPost.post
+# TaskExecutionHttpPost.post -> response taskExecution object
+
+class TestExerciseExecution (TaskExecution):
+    taskExecution = TaskExecutionHttpPost(
+                        TaskExecutionHttpGet(
+                            WorkHttpGet()
+                        ),
+                        WorkHttpPost())    
+    
+    def test_execute(self):
+        assert self.taskExecution.execute()
+    
+    def execute():pass
     

@@ -3,24 +3,26 @@ from django.utils.encoding import escape_uri_path
 import requests
 
 from Exercise import TaskExecutionInputDataForm, ExerciseExecutionByTask, Task, Exercise
+from .TaskExecutionHttp import TaskExecutionHttpGet, TaskExecutionHttpPost
+from .WorkHttp import WorkHttpGet, WorkHttpPost
 
 
-from .views import ExerciseExecuteView, TaskExecutionHttpPost, WorkHttpGet, TaskExecutionHttpGet, WorkHttpPost, exercise_execute, add_step
+from .views import ExerciseExecuteView,  exercise_execute, add_step
 
 # from app.workout_django.excercise_execution import views
 # from excercise_execution.views import views
 
 app_name = 'excercise_execution'
 
-work = WorkHttpGet()
-taskExecutionHttp = TaskExecutionHttpGet()
+work = WorkHttpGet(WorkHttpPost(), Exercise('pullups'))
+# taskExecutionHttp = TaskExecutionHttpGet()
 
 # такая схема: дописать параметры в конструкторы классов
-taskExecution = TaskExecutionHttpPost(
-                    TaskExecutionHttpGet(
-                        WorkHttpGet()
-                    ),
-                    WorkHttpPost()
+taskExecutionHttp = TaskExecutionHttpPost(
+                        TaskExecutionHttpGet(
+                            WorkHttpGet(WorkHttpPost(), Exercise('pullups'))
+                        ),
+                        WorkHttpPost()
 )
 
 # TaskExecutionHttpPost.get -> TaskExecutionHttpGet.get -> WorkHttpGet.get(render form)
@@ -35,7 +37,7 @@ urlpatterns = [
     # path('', exercise_execute, name='input_exercise_reps'),
     # path('<str:exercise_title>/', ExerciseExecuteView.as_view(), name='exercise-custom'),
     path('add_step/', add_step, name='add_step'),
-    path('work/', work.work, name='work'),
+    path('work/', work.work_exercise, name='work'),
     path('work_exercise/<str:exercise>/', work.work_exercise, name='work_exercise'),
     path('task-execution/', taskExecutionHttp.execute, name='task-execution'),
     # path('task-execution/begin', taskExecutionHttp.show_form_executing_work, name='task-execution'),

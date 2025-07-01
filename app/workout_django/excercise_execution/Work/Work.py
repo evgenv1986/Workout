@@ -8,7 +8,7 @@ class Work(ABC):
     
 class Textual(ABC):
     @abstractmethod
-    def as_json(self) -> str: pass 
+    def as_dict(self) -> str: pass 
     @abstractmethod
     def as_string(self) -> str: pass 
     
@@ -18,7 +18,7 @@ class TextualWork(Work, Textual):
     @abstractmethod
     def work (self)-> 'Work': pass
     @abstractmethod
-    def as_json(self) -> str: pass
+    def as_dict(self) -> str: pass
     @abstractmethod
     def as_string(self) -> str: pass
    
