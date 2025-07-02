@@ -5,9 +5,11 @@ class Task:
     _exercise: Exercise
     _reps: int
     _lap: int
-    def __init__(self, exercise: Exercise, reps: int): 
-        self._exercise = exercise
-        self._reps = reps
+    
+    @classmethod
+    def create_with_one_lap(cls, exercise: Exercise, reps: int):
+        return Task(exercise, reps, 1)
+
     def __init__(self, exercise: Exercise, reps: int, lap: int): 
         self._exercise = exercise
         self._reps = reps
