@@ -28,4 +28,4 @@ RUN chmod +x /wait-for-it.sh  # Даем права на выполнение
 # Активация venv при входе в контейнер
 SHELL ["/bin/bash", "-c"]
 RUN echo "source /opt/venv/bin/activate" >> ~/.bashrc
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["python", "workout_django/manage.py", "runserver", "0.0.0.0:8000"]

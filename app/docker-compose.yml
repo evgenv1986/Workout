@@ -1,5 +1,16 @@
 services:
 
+  web:
+    build: .
+    restart: always
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=workout_django.settings
+
+
   # db:
   #   image: postgres
   #   restart: always
@@ -29,14 +40,3 @@ services:
   #   depends_on:
   #     - db
 
-
-  web:
-    build: .
-    command: python workout_django/manage.py runserver 0.0.0.0:8000
-    restart: always
-    volumes:
-      - .:/app
-    ports:
-      - "8000:8000"
-    environment:
-      - DJANGO_SETTINGS_MODULE=workout_django.settings
