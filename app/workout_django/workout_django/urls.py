@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import include, path
-from django.utils.encoding import escape_uri_path
+# from django.utils.encoding import escape_uri_path
 
 from .views import CompositeView
 

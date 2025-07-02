@@ -101,3 +101,13 @@ class TestExerciseExecution (TaskExecution):
     
     def execute():pass
     
+
+    # тест - циклическ запрос на выполнение повторений
+    def test_do_exercise_execute_while_task_not_finished(self):
+        exerciseExecution = \
+            ExerciseExecutionByTask (
+                Task (Exercise('Отжимания'), 25))
+
+
+        exerciseExecution.execute_while_not_finished()
+        exerciseExecution.execute(ExerciseStep(Exercise('Отжимания'), 5))

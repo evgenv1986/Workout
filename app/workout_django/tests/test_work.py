@@ -1,21 +1,23 @@
-import os
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'workout_django.settings')
-
-import django
-django.setup()
-
-from django.test import TestCase, Client
-from django.urls import reverse
-
+from django.test import Client
 import pytest
-from django.test import TestCase, Client
-# from urllib import request
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
-from abc import ABC, abstractmethod
-import requests
 
-from excercise_execution.views import WorkHttpGet, RepsWork
+from Workout.app.workout_django.excercise_execution.Work import RepsWork
+# import os
+# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'workout_django.settings')
+
+# import django
+# django.setup()
+
+# from django.test import TestCase, Client
+# from django.urls import reverse
+
+# from urllib import request
+# from django.http import HttpRequest, HttpResponse
+# from django.shortcuts import render
+# from abc import ABC, abstractmethod
+# import requests
+
+# from excercise_execution.views import WorkHttpGet, RepsWork
 
 # class Work(ABC):
 #     @abstractmethod
@@ -35,7 +37,7 @@ from excercise_execution.views import WorkHttpGet, RepsWork
 #         return 'pullups 25 repetitions'
    
    
-class TestWork():
+class TestWork:
     def test_reps_work_create(self):
         repsWork = RepsWork('pullups', 25)
         
