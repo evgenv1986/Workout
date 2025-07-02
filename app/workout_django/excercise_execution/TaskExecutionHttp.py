@@ -25,7 +25,7 @@ class TaskExecutionHttpPost ():
             return self._taskExecutionHttpGet.execute(request)
             
         if request.method == 'POST':
-            response = self._workHttpPost.work_exercise(request)
+            # response = self._workHttpPost.work_exercise(request)
             work = WorkJson(
                 self._workHttpPost.work_exercise(request)) \
                 .work()
