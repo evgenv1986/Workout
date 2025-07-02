@@ -1,8 +1,9 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 import json
 
 
 class IExercise(ABC):
+    @abstractmethod
     def title(self): pass
 
 
