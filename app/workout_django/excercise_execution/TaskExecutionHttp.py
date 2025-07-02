@@ -1,7 +1,7 @@
 
 import json
 
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from Exercise import Exercise
 from Exercise.ExerciseExecution import ExerciseExecutionByTask
 from Exercise import Task
@@ -17,7 +17,7 @@ class TaskExecutionHttpPost ():
         self._taskExecutionHttpGet = taskExecutionHttpGet
         self._workHttpPost = workHttpPost
         
-    task = Task(Exercise('Отжимания'), 125, 3)
+    task = Task(Exercise('Отжимания'), 12, 3)
     task_execution = ExerciseExecutionByTask (task)
     
     def execute(self, request):
@@ -30,7 +30,10 @@ class TaskExecutionHttpPost ():
                 self._workHttpPost.work_exercise(request)) \
                 .work()
             self.task_execution.executeWork(work)
-            return HttpResponse(self.task_execution)
+            if self.task_execution.remaind() > 0:
+                return HttpResponseRedirect ('/excercise_execute/task-execution/')
+            else:
+                return HttpResponse(self.task_execution.as_json())
         
         
 class TaskExecutionHttpGet ():
