@@ -13,5 +13,5 @@ class RepsWork(TextualWork):
     def as_dict(self):
         return {'exercise': self._exercise, 'reps': self._reps}
     def as_string(self) -> str: 
-        return self._exercise
+        return f'{self._exercise} {self._reps} repetitions'
     
