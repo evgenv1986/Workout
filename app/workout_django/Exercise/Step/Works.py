@@ -8,7 +8,7 @@ class Works:
     def __init__(self):
         self._works = []
     def add(self, work: Work):
-        self._works.append (work)
+        # self._works.append (work)
         pass
     def reps(self)-> int:
         sum: int = 0

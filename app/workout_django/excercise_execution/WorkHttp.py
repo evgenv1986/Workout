@@ -1,6 +1,8 @@
 import json
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import render
+
+from .Work.Workload import WorkloadType
 from .Work import Work, TextualWork
 from excercise_execution.Work import RepsWork
 from Exercise import Exercise
@@ -15,7 +17,13 @@ class WorkJson(Work):
             work_dict['exercise'],
             work_dict['reps']
         )
-
+    def exercise(self)-> str: 
+        return self.json.loads(self._response.content)['exercise']
+    
+    def workload(self)-> WorkloadType: pass
+        # return self.json.loads(self._response.content)['reps'] здесь нужно type а не количество повторений вернуть, 
+    
+    
 class RepsWorkDict(TextualWork):
     _request: HttpRequest
     def __init__(self, request: HttpRequest):
@@ -30,7 +38,8 @@ class RepsWorkDict(TextualWork):
                 'reps': self._request.POST.dict()['reps']}
     def as_string(self) -> str: 
         pass
-    
+    def exercise(self)-> str: pass
+    def workload(self)-> WorkloadType: pass
     
 class WorkHttpPost():
     _exercise: Exercise

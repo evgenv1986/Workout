@@ -1,7 +1,9 @@
 from django.test import Client
 import pytest
 
+from Workout.app.workout_django.Exercise.Step import ExerciseStep
 from Workout.app.workout_django.excercise_execution.Work import RepsWork
+from Workout.app.workout_django.excercise_execution.Work.Workload import RepsWorkload, TimeWorkload
 # import os
 # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'workout_django.settings')
 
@@ -35,11 +37,20 @@ from Workout.app.workout_django.excercise_execution.Work import RepsWork
 #     def execute (self): pass
 #     def content(self):
 #         return 'pullups 25 repetitions'
-   
-   
+     
+class TestWorkloadType:
+    def test_workload_as_string(self):
+        reps_workload = RepsWorkload()
+        assert "Повторения" == reps_workload.title()
+        
+        time_workload = TimeWorkload()
+        assert "Минут" == time_workload.title()
+        
+       
 class TestWork:
     def test_reps_work_create(self):
         repsWork = RepsWork('pullups', 25)
+        
         
     def test_RepsWork_execute(self):
         repsWork = RepsWork('pullups', 25)
@@ -48,6 +59,11 @@ class TestWork:
     def test_work_as_string(self):
         work = RepsWork('pullups', 25)
         assert 'pullups 25 repetitions' == work.as_string()
+
+        
+class TestWorks:
+    def test_add_work(self):
+        pass
         
 
 class TestHttpTestWork():
