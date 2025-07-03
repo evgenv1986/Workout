@@ -47,20 +47,10 @@ class WorkHttpPost():
         
     def work_exercise (self, request: HttpRequest): 
        if request.method == 'POST':
-           work_dict = RepsWorkDict (
-                    request
-                    # request.POST.dict()['exercise'],
-                    # request.POST.dict()['reps']
-                    )
+           work_dict = RepsWorkDict (request)
            dict_ = work_dict.as_dict()
            return JsonResponse(dict_)
-        #    _json = json.dumps(dict_, ensure_ascii=False, indent=4)
-        #    return JsonResponse(_json, content_type='application/json', safe = False)
-        
-    # def work (self, request: HttpRequest) -> HttpResponse: pass
-    # def as_json(self) -> str: pass
-    # def as_string(self) -> str: pass
-    
+
     
 class WorkHttpGet():
     _work: RepsWork
@@ -93,6 +83,3 @@ class WorkHttpGet():
                 data = request.POST.dict()
             self._work = RepsWork(data.get('exercise'), data.get('reps'))
             return JsonResponse(self._work.as_dict()) # возврат выволненного упражнения ввиде json
-            # return HttpResponseRedirect ('/excercise_execute/work/') # переадресация на ту же страницу ввода выполненного упражнения
-            # return (self._work.as_json()) # 
-            # return (self._work)  # возврат ввиде доменного объекта
