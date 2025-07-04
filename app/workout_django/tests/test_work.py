@@ -73,8 +73,15 @@ class TestWorkload:
         time_work_2 = MinutesWorkload(2)
         time_work_3 = MinutesWorkload(3)
         time_work_2.add(time_work_3)
-        assert MinutesWorkload(5).__eq__(time_work_2.total_work())
-        assert MinutesWorkload(5).value() == time_work_2.total_work().value()
+        assert MinutesWorkload(5).__eq__(time_work_2.total_work_value())
+        # assert MinutesWorkload(5).value() == time_work_2.total_work().value()
+    def test_next_in_work(self):
+        time_work_2 = MinutesWorkload(2)
+        next = time_work_2.next()
+        assert "Empty workload" == next.title()
+    def test_total_work(self):
+        time_work_2 = MinutesWorkload(2)
+        assert 2 == time_work_2.total_work_value()
         
         # exercise = ExerciseStep.create_step_with_workload(
         #     exercise = Exercise("pullups"), 
