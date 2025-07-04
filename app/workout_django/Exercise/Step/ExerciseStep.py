@@ -1,5 +1,5 @@
 from Exercise import Exercise
-from excercise_execution.Work import Workload
+from excercise_execution.Work import WorkloadAbstract
 
 
 class ExerciseStep:
@@ -19,7 +19,7 @@ class ExerciseStep:
     def create_step_with_workload (
         cls, 
         exercise: Exercise, 
-        work_type: Workload):
+        work_type: WorkloadAbstract):
         pass
     
     @classmethod

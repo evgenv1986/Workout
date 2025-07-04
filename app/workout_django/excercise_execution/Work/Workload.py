@@ -2,7 +2,7 @@
 from abc import ABC, abstractmethod
 
 
-class Workload(ABC):
+class WorkloadAbstract(ABC):
     @abstractmethod
     def title()-> str: 
         pass
@@ -10,7 +10,7 @@ class Workload(ABC):
     def as_string()-> str: 
         pass
     @abstractmethod
-    def add(self, work: 'Workload'): 
+    def add(self, work: 'WorkloadAbstract'): 
         pass
     @abstractmethod
     def value(self)-> int: 
@@ -19,22 +19,22 @@ class Workload(ABC):
     def total_work_value(self)-> int: 
         pass
     @abstractmethod
-    def next(self)-> 'Workload': 
+    def next(self)-> 'WorkloadAbstract': 
         pass
     @abstractmethod
     def set_next_as_empty():
         pass
     
-class RepsWorkload(Workload):
+class RepsWorkload(WorkloadAbstract):
     _reps: int
-    _next: Workload
+    _next: WorkloadAbstract
     def __init__(self, reps: int):
         self._reps = reps
     def title(self)-> str: 
         return "повторени(я/й/е)"
     def as_string(self)-> str: 
         return f'{self._reps} {self.title()}'
-    def add(self, work: Workload): 
+    def add(self, work: WorkloadAbstract): 
         pass
     def value(self)-> int: 
         pass
@@ -47,29 +47,29 @@ class RepsWorkload(Workload):
     # def next(self)-> 'Workload': 
         # pass
 
-class EmptyWorkload(Workload):
+class EmptyWorkload(WorkloadAbstract):
     def __init__(self):
         pass
     def title(self)-> str: 
         return "Empty workload"
     def as_string(self)-> str: 
         return ""
-    def add(self, work: 'Workload'): 
+    def add(self, work: 'WorkloadAbstract'): 
         pass
     def value(self)-> int: 
         return 0
     def total_work_value(self)-> int: 
         return 0
-    def next(self)-> 'Workload': 
+    def next(self)-> 'WorkloadAbstract': 
         pass
     def set_next_as_empty(self):
         pass
     
     
     
-class MinutesWorkload(Workload):
+class MinutesWorkload(WorkloadAbstract):
     _minutes: int
-    _next: Workload
+    _next: WorkloadAbstract
     def __init__(self, minutes: int):
         self._minutes = minutes
         self.set_next_as_empty()
@@ -79,7 +79,7 @@ class MinutesWorkload(Workload):
         return "минут(а/ы)"
     def as_string(self)-> str: 
         return f'{self._minutes} {self.title()}'
-    def add(self, work: Workload): 
+    def add(self, work: WorkloadAbstract): 
         self._next = MinutesWorkload(work.value())
     def value(self)-> int: 
         return self._minutes

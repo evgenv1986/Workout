@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 from Exercise.ExerciseExecution import ExerciseExecutionByTask
 
-from .Work.Workload import Workload
+from .Work.Workload import WorkloadAbstract
 from .Work import Work, TextualWork
 from excercise_execution.Work import RepsWork
 from Exercise import Exercise
@@ -22,7 +22,7 @@ class WorkJson(Work):
     def exercise(self)-> str: 
         return self.json.loads(self._response.content)['exercise']
     
-    def workload_type(self)-> Workload: pass
+    def workload_type(self)-> WorkloadAbstract: pass
         # return self.json.loads(self._response.content)['reps'] здесь нужно type а не количество повторений вернуть, 
     
     
@@ -41,7 +41,7 @@ class RepsWorkDict(TextualWork):
     def as_string(self) -> str: 
         pass
     def exercise(self)-> str: pass
-    def workload_type(self)-> Workload: pass
+    def workload_type(self)-> WorkloadAbstract: pass
     
 class WorkHttpPost():
     _exercise: Exercise

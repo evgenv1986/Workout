@@ -2,7 +2,7 @@ import pytest
 
 from Exercise.Exercise import Exercise
 from Exercise.Step.ExerciseStep import ExerciseStep
-from excercise_execution.Work.Workload import Workload, RepsWorkload, MinutesWorkload
+from excercise_execution.Work.Workload import WorkloadAbstract, RepsWorkload, MinutesWorkload
 
 class TestExerciseStep:
     def test_exercise_step(self):
