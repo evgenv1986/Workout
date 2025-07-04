@@ -89,3 +89,38 @@ class MinutesWorkload(WorkloadAbstract):
         return total
     def next(self):
         return self._next
+    
+    
+class WorkloadType(ABC):
+    @abstractmethod
+    def title()-> str: 
+        pass     
+class MinutesWorkloadType(WorkloadType):
+    def title(self)-> str: 
+        return "минут(а/ы)"
+
+
+class Workload(WorkloadAbstract):
+    _minutes: int
+    _next: WorkloadAbstract
+    _workload_type: WorkloadType
+    def __init__(self, value: int, workloadType: WorkloadType):
+        self._minutes = value
+        self._workload_type = workloadType
+        self.set_next_as_empty()
+    def set_next_as_empty(self):
+        self._next = EmptyWorkload()
+    def title(self)-> str: 
+        pass
+    def as_string(self)-> str: 
+        return f'{self._minutes} {self._workload_type.title()}'
+    def add(self, work: WorkloadAbstract): 
+        self._next = MinutesWorkload(work.value())
+    def value(self)-> int: 
+        return self._minutes
+    def total_work_value(self)-> int: 
+        total: int = 0
+        total += self.value() + self._next.value()
+        return total
+    def next(self):
+        return self._next

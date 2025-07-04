@@ -4,7 +4,7 @@ import pytest
 from Exercise.Step import ExerciseStep
 from Workout.app.workout_django import Exercise
 from excercise_execution.Work import RepsWork, WorkImp
-from excercise_execution.Work.Workload import RepsWorkload, MinutesWorkload
+from excercise_execution.Work.Workload import MinutesWorkloadType, RepsWorkload, MinutesWorkload, Workload
 # import os
 # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'workout_django.settings')
 
@@ -69,7 +69,7 @@ class TestWorkload:
         assert "2 минут(а/ы)" == time_workload.as_string()
     def test_equals(self):
         assert MinutesWorkload(2).__eq__(MinutesWorkload(2))
-    def test_addition_workload(self):
+    def test_addition_workload(self):        
         time_work_2 = MinutesWorkload(2)
         time_work_3 = MinutesWorkload(3)
         time_work_2.add(time_work_3)
@@ -82,20 +82,13 @@ class TestWorkload:
     def test_total_work(self):
         time_work_2 = MinutesWorkload(2)
         assert 2 == time_work_2.total_work_value()
+    
+class TestMergedWorkloadAndSeparatedWorkloadTypes:
+    def test_merge_workload_into_one_class_and_separate_type_workloads(self):
+        workload = Workload(2, MinutesWorkloadType())
+        assert "2 минут(а/ы)" == workload.as_string()
         
-        # exercise = ExerciseStep.create_step_with_workload(
-        #     exercise = Exercise("pullups"), 
-        #     work_type = RepsWorkload(reps = 25)
-        #     )
-        
-        # exercise = ExerciseStep.create_step_with_workload(
-        #     exercise = Exercise("pullups"), 
-        #     work_type = TimeWorkload(minutes = 2)
-        #     )
-        
-class TestWorks:
-    def test_add_work(self):
-        pass
+ 
         
 
 class TestHttpTestWork():
