@@ -22,7 +22,7 @@ class WorkJson(Work):
     def exercise(self)-> str: 
         return self.json.loads(self._response.content)['exercise']
     
-    def workload(self)-> WorkloadType: pass
+    def workload_type(self)-> WorkloadType: pass
         # return self.json.loads(self._response.content)['reps'] здесь нужно type а не количество повторений вернуть, 
     
     
@@ -41,7 +41,7 @@ class RepsWorkDict(TextualWork):
     def as_string(self) -> str: 
         pass
     def exercise(self)-> str: pass
-    def workload(self)-> WorkloadType: pass
+    def workload_type(self)-> WorkloadType: pass
     
 class WorkHttpPost():
     _exercise: Exercise

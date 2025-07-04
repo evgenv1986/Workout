@@ -4,30 +4,36 @@ from .Workload import WorkloadType
 
 class Work(ABC):
     @abstractmethod
-    def work (self)-> 'Work': pass
+    def workload_type(self)-> WorkloadType: 
+        pass
     @abstractmethod
-    def exercise(self)-> str: pass
-    @abstractmethod
-    def workload(self)-> WorkloadType: pass
+    def execute(self): 
+        pass
     
 class Textual(ABC):
     @abstractmethod
-    def as_dict(self) -> str: pass 
+    def as_dict(self) -> str: 
+        pass 
     @abstractmethod
-    def as_string(self) -> str: pass 
+    def as_string(self) -> str: 
+        pass 
     
-
 
 class TextualWork(Work, Textual):
     @abstractmethod
-    def work (self)-> 'Work': pass
+    def work (self)-> 'Work': 
+        pass
     @abstractmethod
-    def as_dict(self) -> str: pass
+    def as_dict(self) -> str: 
+        pass
     @abstractmethod
-    def as_string(self) -> str: pass
+    def as_string(self) -> str: 
+        pass
     @abstractmethod
-    def exercise(self)-> str: pass
+    def exercise(self)-> str: 
+        pass
     @abstractmethod
-    def workload(self)-> WorkloadType: pass
+    def workload_type(self)-> WorkloadType: 
+        pass
    
    

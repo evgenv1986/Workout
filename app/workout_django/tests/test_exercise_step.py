@@ -2,7 +2,7 @@ import pytest
 
 from Exercise.Exercise import Exercise
 from Exercise.Step.ExerciseStep import ExerciseStep
-from Workout.app.workout_django.excercise_execution.Work.Workload import Workload, RepsWorkload, TimeWorkload
+from excercise_execution.Work.Workload import Workload, RepsWorkload, TimeWorkload
 
 class TestExerciseStep:
     def test_exercise_step(self):
