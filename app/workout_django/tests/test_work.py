@@ -4,7 +4,7 @@ import pytest
 from Exercise.Step import ExerciseStep
 from Workout.app.workout_django import Exercise
 from excercise_execution.Work import RepsWork, WorkImp
-from excercise_execution.Work.Workload import RepsWorkload, TimeWorkload
+from excercise_execution.Work.Workload import RepsWorkload, MinutesWorkload
 # import os
 # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'workout_django.settings')
 
@@ -44,7 +44,7 @@ class TestWorkloadType:
         reps_workload = RepsWorkload()
         assert "Повторения" == reps_workload.title()
         
-        time_workload = TimeWorkload()
+        time_workload = MinutesWorkload()
         assert "Минут" == time_workload.title()
         
        
@@ -65,9 +65,16 @@ class TestWorkload:
         repsWorkload = RepsWorkload(25)
         assert "25 повторени(я/й/е)" == repsWorkload.as_string()
     def test_create_time_workload(self):
-        time_workload = TimeWorkload(2)
+        time_workload = MinutesWorkload(2)
         assert "2 минут(а/ы)" == time_workload.as_string()
-    
+    def test_equals(self):
+        assert MinutesWorkload(2).__eq__(MinutesWorkload(2))
+    def test_addition_workload(self):
+        time_work_2 = MinutesWorkload(2)
+        time_work_3 = MinutesWorkload(3)
+        time_work_2.add(time_work_3)
+        assert MinutesWorkload(5).__eq__(time_work_2.total_work())
+        assert MinutesWorkload(5).value() == time_work_2.total_work().value()
         
         # exercise = ExerciseStep.create_step_with_workload(
         #     exercise = Exercise("pullups"), 

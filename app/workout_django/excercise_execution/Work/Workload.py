@@ -9,6 +9,12 @@ class Workload(ABC):
     @abstractmethod
     def as_string()-> str: 
         pass
+    @abstractmethod
+    def add(self, work: 'Workload'): 
+        pass
+    @abstractmethod
+    def value(self)-> int: 
+        pass
     
 class RepsWorkload(Workload):
     _reps: int
@@ -18,13 +24,21 @@ class RepsWorkload(Workload):
         return "повторени(я/й/е)"
     def as_string(self)-> str: 
         return f'{self._reps} {self.title()}'
-    
+    def add(self, work: Workload): 
+        pass
+    def value(self)-> int: 
+        pass
 
-class TimeWorkload(Workload):
+class MinutesWorkload(Workload):
     _minutes: int
+    _next: Workload
     def __init__(self, minutes: int):
         self._minutes = minutes
     def title(self)-> str: 
         return "минут(а/ы)"
     def as_string(self)-> str: 
         return f'{self._minutes} {self.title()}'
+    def add(self, work: Workload): 
+        self._next = MinutesWorkload(work.value())
+    def value(self)-> int: 
+        return self._minutes

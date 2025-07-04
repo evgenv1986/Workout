@@ -2,7 +2,7 @@ import pytest
 
 from Exercise.Exercise import Exercise
 from Exercise.Step.ExerciseStep import ExerciseStep
-from excercise_execution.Work.Workload import Workload, RepsWorkload, TimeWorkload
+from excercise_execution.Work.Workload import Workload, RepsWorkload, MinutesWorkload
 
 class TestExerciseStep:
     def test_exercise_step(self):
@@ -15,5 +15,5 @@ class TestExerciseStep:
     def test_create_step_with_time_workload(self):
         assert 3 == ExerciseStep.create_step_with_workload (
             Exercise('Отжимания'), 
-            TimeWorkload()) \
+            MinutesWorkload()) \
             .reps()
