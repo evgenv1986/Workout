@@ -1,6 +1,6 @@
 from abc import ABC
-from excercise_execution.Work.Workload import WorkloadType
-from excercise_execution.Work.Work import TextualWork
+from excercise_execution.Work.Workload import Workload
+from excercise_execution.Work.Work import TextualWork, Work
 
 
 class RepsWork(TextualWork):
@@ -17,6 +17,16 @@ class RepsWork(TextualWork):
         return f'{self._exercise} {self._reps} repetitions'
     def exercise(self)-> str: 
         return self.json.loads(self._response.content)['exercise']
-    def workload(self)-> WorkloadType: pass
+    def workload_type(self)-> Workload: pass
         # return self.json.loads(self._response.content)['reps'] здесь нужно type а не количество повторений вернуть, 
     
+class WorkImp (Work):
+    def __init__(
+        self,
+        workload_type: Workload,
+        amount: int):
+        pass
+    def execute(self):
+        pass
+    def workload_type(self)-> str: 
+        pass

@@ -1,10 +1,10 @@
 
 from abc import ABC, abstractmethod
-from .Workload import WorkloadType
+from .Workload import Workload
 
 class Work(ABC):
     @abstractmethod
-    def workload_type(self)-> WorkloadType: 
+    def workload_type(self)-> str: 
         pass
     @abstractmethod
     def execute(self): 
@@ -33,7 +33,7 @@ class TextualWork(Work, Textual):
     def exercise(self)-> str: 
         pass
     @abstractmethod
-    def workload_type(self)-> WorkloadType: 
+    def workload_type(self)-> Workload: 
         pass
    
    

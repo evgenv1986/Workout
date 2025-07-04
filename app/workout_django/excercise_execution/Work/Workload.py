@@ -2,19 +2,29 @@
 from abc import ABC, abstractmethod
 
 
-class WorkloadType(ABC):
+class Workload(ABC):
     @abstractmethod
-    def title()-> str: pass
+    def title()-> str: 
+        pass
+    @abstractmethod
+    def as_string()-> str: 
+        pass
     
-class RepsWorkload(WorkloadType):
+class RepsWorkload(Workload):
     _reps: int
     def __init__(self, reps: int):
         self._reps = reps
-    def title()-> str: "Повторения"
+    def title(self)-> str: 
+        return "повторени(я/й/е)"
+    def as_string(self)-> str: 
+        return f'{self._reps} {self.title()}'
+    
 
-class TimeWorkload(WorkloadType):
+class TimeWorkload(Workload):
     _minutes: int
     def __init__(self, minutes: int):
         self._minutes = minutes
-    def title()-> str: 
-        return "Минут"
+    def title(self)-> str: 
+        return "минут(а/ы)"
+    def as_string(self)-> str: 
+        return f'{self._minutes} {self.title()}'

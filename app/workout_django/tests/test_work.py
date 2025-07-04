@@ -1,9 +1,10 @@
 from django.test import Client
 import pytest
 
-from Workout.app.workout_django.Exercise.Step import ExerciseStep
-from Workout.app.workout_django.excercise_execution.Work import RepsWork
-from Workout.app.workout_django.excercise_execution.Work.Workload import RepsWorkload, TimeWorkload
+from Exercise.Step import ExerciseStep
+from Workout.app.workout_django import Exercise
+from excercise_execution.Work import RepsWork, WorkImp
+from excercise_execution.Work.Workload import RepsWorkload, TimeWorkload
 # import os
 # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'workout_django.settings')
 
@@ -51,7 +52,6 @@ class TestWork:
     def test_reps_work_create(self):
         repsWork = RepsWork('pullups', 25)
         
-        
     def test_RepsWork_execute(self):
         repsWork = RepsWork('pullups', 25)
         repsWork.work()
@@ -60,6 +60,24 @@ class TestWork:
         work = RepsWork('pullups', 25)
         assert 'pullups 25 repetitions' == work.as_string()
 
+class TestWorkload:
+    def test_create_reps_workload(self):
+        repsWorkload = RepsWorkload(25)
+        assert "25 повторени(я/й/е)" == repsWorkload.as_string()
+    def test_create_time_workload(self):
+        time_workload = TimeWorkload(2)
+        assert "2 минут(а/ы)" == time_workload.as_string()
+    
+        
+        # exercise = ExerciseStep.create_step_with_workload(
+        #     exercise = Exercise("pullups"), 
+        #     work_type = RepsWorkload(reps = 25)
+        #     )
+        
+        # exercise = ExerciseStep.create_step_with_workload(
+        #     exercise = Exercise("pullups"), 
+        #     work_type = TimeWorkload(minutes = 2)
+        #     )
         
 class TestWorks:
     def test_add_work(self):

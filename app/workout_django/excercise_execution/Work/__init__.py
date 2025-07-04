@@ -1,3 +1,3 @@
-from .RepsWork import RepsWork
+from .RepsWork import RepsWork, WorkImp
 from .Work import TextualWork, Work
-from .Workload import WorkloadType, RepsWorkload, TimeWorkload
+from .Workload import Workload, RepsWorkload, TimeWorkload
