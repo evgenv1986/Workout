@@ -84,7 +84,7 @@ class MinutesWorkload(Workload):
     def value(self)-> int: 
         return self._minutes
     def total_work_value(self)-> int: 
-        total: int
+        total: int = 0
         total += self.value() + self._next.value()
         return total
     def next(self):
