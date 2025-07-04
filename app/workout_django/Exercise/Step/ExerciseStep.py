@@ -16,7 +16,10 @@ class ExerciseStep:
             'reps': self._reps
         }
     @classmethod
-    def create_step_with_workload (cls, exercise: Exercise, work_type: Workload.WorkloadType):
+    def create_step_with_workload (
+        cls, 
+        exercise: Exercise, 
+        work_type: Workload):
         pass
     
     @classmethod
