@@ -2,6 +2,8 @@ import json
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import render
 
+from Exercise.ExerciseExecution import ExerciseExecutionByTask
+
 from .Work.Workload import WorkloadType
 from .Work import Work, TextualWork
 from excercise_execution.Work import RepsWork
@@ -60,13 +62,27 @@ class WorkHttpGet():
         self._workPost = workPost
         self._exercise = exercise
     
-    def work_exercise (self, request: HttpRequest, exercise: str) -> HttpResponse: 
+    def work_exercise (self, 
+                       request: HttpRequest, 
+                       exercise: str, 
+                       remaind_work: int,
+                       task_execution: ExerciseExecutionByTask) -> HttpResponse: 
         if request.method == 'GET':
-            return render (
+            # return render (
+            #     request,
+            #     'execution/workout/exercise/step/step.html',
+            #     {'exercise': exercise,
+            #      'remaind_work': remaind_work,
+            #     }
+            # )
+            return render(
                 request,
-                'execution/workout/exercise/step/step.html',
-                {'exercise': exercise}
-            )
+                'execution/workout/taskExecution/taskExecution.html',
+                {'task_execution': task_execution,
+                'work_execute': "execution/workout/exercise/step/step.html",
+                'exercise': exercise,
+                'remaind_work': remaind_work,})
+    
     
         if request.method == 'POST':
             data = {}        

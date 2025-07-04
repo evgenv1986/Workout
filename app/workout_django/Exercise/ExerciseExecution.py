@@ -1,19 +1,14 @@
 from abc import ABC, abstractmethod
-from multiprocessing.connection import Client
-
 from django.shortcuts import render
-from requests import request
-from Exercise import Exercise
 from Exercise.Task import Task
 from Exercise.Step.ExerciseStep import ExerciseStep
 from Exercise.Step.ExerciseSteps import ExerciseSteps
-from excercise_execution.Work import Workload
-from excercise_execution.Work import RepsWork
 from excercise_execution.Work import Work
 
 class TaskExecution(ABC):
     @abstractmethod
-    def execute():pass
+    def execute(self):
+        pass
     
 class TaskExecutionInputDataForm(TaskExecution):
     _task : Task
@@ -42,6 +37,7 @@ class ExerciseExecutionByTask:
         works_reps = 0
         for w in self._works:
             works_reps += int (w.work())
+        result = self._exerciseTask.reps() - works_reps
         return (
             self._exerciseTask.reps() - 
             # self._exerciseSteps.reps()
@@ -50,7 +46,7 @@ class ExerciseExecutionByTask:
     def as_json(self):
         return {
             'title': self._exerciseTask._exercise._title,
-            'reps': len(self._works)}
+            'reps': self._exerciseTask.reps()}
     def executed(self):
         works_reps = 0
         for w in self._works:

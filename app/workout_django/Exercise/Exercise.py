@@ -4,7 +4,8 @@ import json
 
 class IExercise(ABC):
     @abstractmethod
-    def title(self): pass
+    def title(self): 
+        pass
 
 
 class Exercise(IExercise):
@@ -24,8 +25,8 @@ class Exercise(IExercise):
     
 
 class DictionaryExercise(IExercise):
+    _dicty: dict
     def __init__(self, dicty):
-        _dicty: dict
         self._dicty = dicty
     def title(self):
         return self._dicty['title']

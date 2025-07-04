@@ -32,7 +32,7 @@ class TaskExecutionHttpPost ():
             if self.task_execution.remaind() > 0:
                 return HttpResponseRedirect ('/excercise_execute/task-execution/')
             else:
-                return HttpResponse(self.task_execution.as_json())
+                return HttpResponse(f'Задание выполнено {self.task_execution.as_json()}')
         
         
 class TaskExecutionHttpGet ():
@@ -41,13 +41,17 @@ class TaskExecutionHttpGet ():
     _workHttpGet : WorkHttpGet
     work_http_post : WorkHttpPost
     def __init__(self, workHttpGet: WorkHttpGet):
-        self.task = Task(Exercise('Отжимания'), 125, 3)
+        self.task = Task(Exercise('Отжимания'), 12, 3)
         self.task_execution = ExerciseExecutionByTask (self.task)
         self._workHttpGet = workHttpGet
     
     def execute(self, request):
         if request.method == 'GET':
-            response = self._workHttpGet.work_exercise(request, exercise = self.task._exercise._title)
+            response = self._workHttpGet.work_exercise(
+                request, 
+                exercise = self.task._exercise._title,
+                remaind_work = self.task._reps,
+                task_execution= self.task_execution)
             return response
            
         if request.method == 'POST':
