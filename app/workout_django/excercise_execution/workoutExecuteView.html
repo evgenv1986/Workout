@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма тренировки</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        select, input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .checkbox-group {
+            margin-top: 5px;
+        }
+        .checkbox-item {
+            margin-bottom: 5px;
+        }
+        .exercise-list {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+        .exercise-list li {
+            margin-bottom: 8px;
+        }
+        .active-exercise {
+            font-weight: bold;
+            color: #2c7be5;
+        }
+        .exercise-result {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Форма тренировки</h1>
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="difficulty">Сложность:</label>
+                <select id="difficulty" name="difficulty" required>
+                    <option value="">-- Выберите сложность --</option>
+                    <option value="easy">Легкая</option>
+                    <option value="hard">Тяжелая</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="workout_type">Вид нагрузки:</label>
+                <select id="workout_type" name="workout_type" required>
+                    <option value="">-- Выберите вид нагрузки --</option>
+                    <option value="cardio">Кардио</option>
+                    <option value="strength">Силовая</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="location">Место проведения:</label>
+                <select id="location" name="location" required>
+                    <option value="">-- Выберите место проведения --</option>
+                    <option value="outdoor">Улица</option>
+                    <option value="gym">Тренажёрный зал</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Дополнительное оборудование:</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="equipment_belt" name="equipment" value="belt">
+                        <label for="equipment_belt">Пояс</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="equipment_kettlebell" name="equipment" value="kettlebell">
+                        <label for="equipment_kettlebell">Гиря</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="equipment_dumbbells" name="equipment" value="dumbbells">
+                        <label for="equipment_dumbbells">Гантели</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="equipment_plates" name="equipment" value="plates">
+                        <label for="equipment_plates">Блины</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Список Упражнений:</label>
+                <ul class="exercise-list">
+                    <li class="active-exercise">Отжимания от пола - 25 повторов × 3 подхода</li>
+                    <li>Подтягивания - 15 повторов × 5 подходов</li>
+                    <li>Приседания - 10 повторов × 4 подхода</li>
+                </ul>
+            </div>
+            
+            <div class="form-group exercise-result">
+                <label for="exercise">Результат выполнения:</label>
+                <select id="exercise" name="exercise" required>
+                    <option value="">-- Выберите упражнение --</option>
+                    <option value="pushups" selected>Отжимания от пола</option>
+                    <option value="pullups">Подтягивания</option>
+                    <option value="squats">Приседания</option>
+                </select>
+                
+                <div style="margin-top: 10px;">
+                    <label>Выполнил повторов:</label>
+                    <input type="text" name="reps_completed" placeholder="Введите числа через пробел (например: 5 10 15 25)" required>
+                </div>
+                
+                <div style="margin-top: 15px; text-align: right;">
+                    <button type="submit">Выполнить</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

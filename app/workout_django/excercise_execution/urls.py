@@ -3,6 +3,7 @@ from django.utils.encoding import escape_uri_path
 import requests
 
 from Exercise import TaskExecutionInputDataForm, ExerciseExecutionByTask, Task, Exercise
+from .workoutExecute import workout_execute
 from .TaskExecutionHttp import TaskExecutionHttpGet, TaskExecutionHttpPost
 from .WorkHttp import WorkHttpGet, WorkHttpPost
 
@@ -46,7 +47,8 @@ urlpatterns = [
             task_execution = ExerciseExecutionByTask (Task(Exercise('Отжимания'), 125, 3)))
          .execute, name='execute'),
     
-
+    path('workout_execute/', workout_execute, name='workout_execute'),
+    
     # path # "workout/execute/create -> get:Html -> post: Json-Workout",
     # path ("""workout/execute/
     #                     tasks=[
