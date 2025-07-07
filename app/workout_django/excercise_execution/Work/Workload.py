@@ -1,6 +1,8 @@
 
 from abc import ABC, abstractmethod
 
+from Exercise import Exercise
+
 
 class WorkloadAbstract(ABC):
     @abstractmethod
@@ -99,14 +101,23 @@ class MinutesWorkloadType(WorkloadType):
     def title(self)-> str: 
         return "минут(а/ы)"
 
-
+class RepsWorkloadType(WorkloadType):
+    def title(self)-> str: 
+        return "Повторение(я)"
+    
+    
 class Workload(WorkloadAbstract):
     _minutes: int
     _next: WorkloadAbstract
     _workload_type: WorkloadType
-    def __init__(self, value: int, workloadType: WorkloadType):
+    _exercise: Exercise
+    def __init__(self, 
+                 exercise: Exercise,
+                 value: int, 
+                 workloadType: WorkloadType):
         self._minutes = value
         self._workload_type = workloadType
+        self._exercise = exercise
         self.set_next_as_empty()
     def set_next_as_empty(self):
         self._next = EmptyWorkload()

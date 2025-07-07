@@ -3,6 +3,7 @@ from django.shortcuts import render
 from Exercise.Task import Task
 from Exercise.Step.ExerciseStep import ExerciseStep
 from Exercise.Step.ExerciseSteps import ExerciseSteps
+from excercise_execution.Work.Workload import Workload
 from excercise_execution.Work import Work
 
 class TaskExecution(ABC):
@@ -26,6 +27,7 @@ class ExerciseExecutionByTask:
     _exerciseTask: Task
     _exerciseSteps: ExerciseSteps
     _works = []
+    _workload: Workload
     def __init__(self, exerciseTask: Task):
         self._exerciseTask = exerciseTask
         self._exerciseSteps = ExerciseSteps()
@@ -54,3 +56,9 @@ class ExerciseExecutionByTask:
         return works_reps
     def task_work(self):
         return self._exerciseTask.reps()
+    
+    def executeWork2(self, work: Work):
+        self._workload.add(work)
+        if self.remaind() > 0:
+            ExerciseExecutionByTask(self._exerciseTask).executeWork2()
+        

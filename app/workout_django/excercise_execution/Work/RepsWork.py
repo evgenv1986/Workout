@@ -19,6 +19,9 @@ class RepsWork(TextualWork):
         return self.json.loads(self._response.content)['exercise']
     def workload_type(self)-> WorkloadAbstract: pass
         # return self.json.loads(self._response.content)['reps'] здесь нужно type а не количество повторений вернуть, 
+    def execute(self):
+        pass
+    
     
 class WorkImp (Work):
     def __init__(

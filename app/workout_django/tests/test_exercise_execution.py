@@ -1,16 +1,19 @@
-import os
+import pytest
+# import os
 from django.conf import settings
 from django.test import TestCase
-
-from excercise_execution.views import TaskExecutionHttpGet, TaskExecutionHttpPost, WorkHttpGet, WorkHttpPost
-from excercise_execution.Work import RepsWork
-os.environ['DJANGO_SETTINGS_MODULE'] = 'workout_django.settings' 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'workout_django.settings')
-
-
 from django.test import Client
-import pytest
-import requests
+
+from excercise_execution.TaskExecutionHttp import TaskExecutionHttpGet, TaskExecutionHttpPost
+from excercise_execution.WorkHttp import WorkHttpGet, WorkHttpPost
+from excercise_execution.Work import Work
+from excercise_execution.Work.Workload import RepsWorkloadType, Workload
+from excercise_execution.Work import RepsWork
+# os.environ['DJANGO_SETTINGS_MODULE'] = 'workout_django.settings' 
+# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'workout_django.settings')
+
+
+# import requests
 
 from Exercise.Exercise import Exercise
 from Exercise.ExerciseExecution import ExerciseExecutionByTask, TaskExecution, TaskExecutionInputDataForm
@@ -68,6 +71,8 @@ class TestExerciseExecution:
         assert 20 == exerciseExecution.remaind()
         
     
+        
+    
 class TestHttpTestWork(TestCase):
     @classmethod
     def setUpClass(cls):
@@ -92,7 +97,9 @@ class TestHttpTestWork(TestCase):
 class TestExerciseExecution (TaskExecution):
     taskExecution = TaskExecutionHttpPost(
                         TaskExecutionHttpGet(
-                            WorkHttpGet()
+                            WorkHttpGet(
+                                WorkHttpPost(), Exercise("title")
+                            )
                         ),
                         WorkHttpPost())    
     

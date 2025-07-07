@@ -1,7 +1,7 @@
 import pytest
 
 from Exercise.Exercise import Exercise
-from Workout.app.workout_django.Exercise.Task import Task
+from Exercise.Task import Task
 from Exercise.Step.ExerciseStep import ExerciseStep
 
 

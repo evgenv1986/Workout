@@ -2,9 +2,9 @@ from django.test import Client
 import pytest
 
 from Exercise.Step import ExerciseStep
-from Workout.app.workout_django import Exercise
+from Exercise import Exercise
 from excercise_execution.Work import RepsWork, WorkImp
-from excercise_execution.Work.Workload import MinutesWorkloadType, RepsWorkload, MinutesWorkload, Workload
+from excercise_execution.Work.Workload import MinutesWorkloadType, RepsWorkload, MinutesWorkload, Workload, WorkloadAbstract
 # import os
 # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'workout_django.settings')
 
@@ -74,7 +74,7 @@ class TestWorkload:
         time_work_3 = MinutesWorkload(3)
         time_work_2.add(time_work_3)
         assert MinutesWorkload(5).__eq__(time_work_2.total_work_value())
-        # assert MinutesWorkload(5).value() == time_work_2.total_work().value()
+        assert MinutesWorkload(5).value() == time_work_2.total_work().value()
     def test_next_in_work(self):
         time_work_2 = MinutesWorkload(2)
         next = time_work_2.next()
@@ -87,7 +87,20 @@ class TestMergedWorkloadAndSeparatedWorkloadTypes:
     def test_merge_workload_into_one_class_and_separate_type_workloads(self):
         workload = Workload(2, MinutesWorkloadType())
         assert "2 минут(а/ы)" == workload.as_string()
-        
+    def test_set_next_as_empty(self):
+        pass
+    def test_title(self)-> str: 
+        pass
+    def test_as_string(self)-> str: 
+        pass
+    def test_add(self, work: WorkloadAbstract): 
+        pass
+    def test_value(self)-> int: 
+        pass
+    def test_total_work_value(self)-> int: 
+        pass
+    def test_next(self):
+        pass
  
         
 
